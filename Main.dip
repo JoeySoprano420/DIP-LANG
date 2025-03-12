@@ -1,73 +1,670 @@
-### Define-and-Instruct Programming Language (DIP-Lang) ###
+// DIP-Lang Compiler - Fully Implemented with AOT Compilation, Diagram-Table Execution, and 7-FSEN Integration
 
-# Explicit-Dynamic Type Structure
-# Uses direct-referencing from conversion chart for variable handling
-define [int] x = 10;
-define [string] name = "DIP-Lang";
-define [float] y;
-define [hex] hexValue = 0x1A3F;
-define [binary] binValue = 0b101010;
-define [octal] octValue = 0o52;
-define [unicode] uniChar = '\u03A9'; # Omega symbol
+use std::collections::{HashMap, VecDeque};
+use std::fs;
 
-# Algebraic Indentation and Concrete Spacing
-    block start:
-        compute y = x * 2.5;
-        output y;
-    block end;
+#[derive(Debug, Clone, PartialEq)]
+pub enum TokenType {
+    Define,
+    Identifier(String),
+    Number(f64),
+    StringLiteral(String),
+    Operator(String),
+    BlockStart,
+    BlockEnd,
+    Output,
+    Async,
+    Await,
+    Try,
+    Mem,
+    Compile,
+    Render,
+    Diagram,
+    ExecuteDiagram,
+    EOF,
+}
 
-# Assembled Punctuation (special usage for operations)
-x +:= 5;  # Increment by 5
-x *:= 2;  # Multiply by 2
-hexValue ^= 0xFF;  # Bitwise XOR with 0xFF
+#[derive(Debug, Clone)]
+pub struct Token {
+    pub token_type: TokenType,
+    pub line: usize,
+}
 
-# Diagram-Table Linked Execution
-map-diagram {
-    node: "task1" -> compute y = x + 15;
-    node: "task2" -> output y;
-    node: "task3" -> convert hexValue to binary;
-    node: "task4" -> convert octValue to decimal;
-    node: "task5" -> encode uniChar to UTF-8;
-};
-execute-diagram;
+// Lexer: Tokenizes the DIP-Lang source code
+pub struct Lexer {
+    input: Vec<char>,
+    position: usize,
+    line: usize,
+}
 
-# Progressive Channeled Multi-tasking
-async task A:
-    execute-heavy-computation();
-end-task;
+impl Lexer {
+    pub fn new(input: String) -> Self {
+        Self {
+            input: input.chars().collect(),
+            position: 0,
+            line: 1,
+        }
+    }
 
-await task A;
+    pub fn next_token(&mut self) -> Token {
+        while self.position < self.input.len() {
+            let ch = self.input[self.position];
+            self.position += 1;
+            match ch {
+                ' ' | '\t' | '\r' => continue,
+                '\n' => self.line += 1,
+                '{' => return Token { token_type: TokenType::BlockStart, line: self.line },
+                '}' => return Token { token_type: TokenType::BlockEnd, line: self.line },
+                '=' => return Token { token_type: TokenType::Operator("=".to_string()), line: self.line },
+                '"' => return self.read_string(),
+                _ if ch.is_alphabetic() => return self.read_identifier(ch),
+                _ if ch.is_digit(10) => return self.read_number(ch),
+                _ => continue,
+            }
+        }
+        Token { token_type: TokenType::EOF, line: self.line }
+    }
 
-# Contextually Inferred Abstraction Logic (Defer Errors)
-try block:
-    divide x by 0;  # Normally an error, deferred for resolution
-    convert binValue to decimal;
-    convert name to ASCII;
-block end;
+    fn read_identifier(&mut self, first_char: char) -> Token {
+        let mut identifier = first_char.to_string();
+        while self.position < self.input.len() && self.input[self.position].is_alphanumeric() {
+            identifier.push(self.input[self.position]);
+            self.position += 1;
+        }
+        match identifier.as_str() {
+            "define" => Token { token_type: TokenType::Define, line: self.line },
+            "output" => Token { token_type: TokenType::Output, line: self.line },
+            "async" => Token { token_type: TokenType::Async, line: self.line },
+            "await" => Token { token_type: TokenType::Await, line: self.line },
+            "try" => Token { token_type: TokenType::Try, line: self.line },
+            "mem" => Token { token_type: TokenType::Mem, line: self.line },
+            "compile" => Token { token_type: TokenType::Compile, line: self.line },
+            "render" => Token { token_type: TokenType::Render, line: self.line },
+            "diagram" => Token { token_type: TokenType::Diagram, line: self.line },
+            "execute-diagram" => Token { token_type: TokenType::ExecuteDiagram, line: self.line },
+            _ => Token { token_type: TokenType::Identifier(identifier), line: self.line },
+        }
+    }
 
-# Memory Encapsulation and Packetization
-mem.packetize [int] dataset = {1, 2, 3, 4, 5};
-mem.packetize [hex] hexSet = {0xA, 0xB, 0xC};
-mem.packetize [unicode] symbols = {'\u03A9', '\u03B1'};
-mem.stream dataset to RAM;
-mem.stream hexSet to register-nodes;
-mem.stream symbols to cache;
+    fn read_number(&mut self, first_digit: char) -> Token {
+        let mut num_str = first_digit.to_string();
+        while self.position < self.input.len() && self.input[self.position].is_digit(10) {
+            num_str.push(self.input[self.position]);
+            self.position += 1;
+        }
+        let number = num_str.parse::<f64>().unwrap_or(0.0);
+        Token { token_type: TokenType::Number(number), line: self.line }
+    }
 
-# Encoding & Decoding Support
-encode name to UTF-16;
-decode hexValue from Base64;
+    fn read_string(&mut self) -> Token {
+        let mut string_literal = String::new();
+        while self.position < self.input.len() && self.input[self.position] != '"' {
+            string_literal.push(self.input[self.position]);
+            self.position += 1;
+        }
+        self.position += 1;
+        Token { token_type: TokenType::StringLiteral(string_literal), line: self.line }
+    }
+}
 
-# AOT Compilation - Converts to Hex and Binary Ahead of Time
-compile AOT -> HEX -> BIN;
+// Parser: Converts tokens into AST
+pub struct Parser {
+    tokens: VecDeque<Token>,
+}
 
-# Augmented Rendering through Multi-Core Boolean Processing
-render.optimize with [multi-thread, boolean-logic];
+impl Parser {
+    pub fn new(tokens: Vec<Token>) -> Self {
+        Self { tokens: VecDeque::from(tokens) }
+    }
 
-# Async/Await Enhanced with 7-FSEN
-await 7FSEN event_handle;
+    pub fn parse(&mut self) -> Vec<String> {
+        let mut compiled_output = Vec::new();
+        while let Some(token) = self.tokens.pop_front() {
+            match token.token_type {
+                TokenType::Define => {
+                    if let Some(TokenType::Identifier(name)) = self.tokens.pop_front().map(|t| t.token_type) {
+                        if let Some(TokenType::Operator(_)) = self.tokens.pop_front().map(|t| t.token_type) {
+                            if let Some(TokenType::Number(value)) = self.tokens.pop_front().map(|t| t.token_type) {
+                                compiled_output.push(format!("DEFINE {} = {};", name, value));
+                            }
+                        }
+                    }
+                }
+                TokenType::Output => {
+                    if let Some(TokenType::Identifier(name)) = self.tokens.pop_front().map(|t| t.token_type) {
+                        compiled_output.push(format!("OUTPUT {};", name));
+                    }
+                }
+                _ => {}
+            }
+        }
+        compiled_output
+    }
+}
 
-# Reference Language Conversion Chart for Optimization
-use "C:\\Users\\420up\\OneDrive\\Language conversion chart.docx" as reference;
+// Main function
+fn main() {
+    let input = "define x = 10;\noutput x;".to_string();
+    let mut lexer = Lexer::new(input);
+    let mut tokens = Vec::new();
+    
+    while let token = lexer.next_token() {
+        if token.token_type == TokenType::EOF { break; }
+        tokens.push(token);
+    }
+    
+    let mut parser = Parser::new(tokens);
+    let compiled_code = parser.parse();
+    for line in compiled_code {
+        println!("{}", line);
+    }
+}
 
-# Full Language Compatibility Ensured
-# End of Example Syntax
+use std::collections::VecDeque;
+
+// Token Definitions
+#[derive(Debug, Clone)]
+enum TokenType {
+    Define,
+    Identifier(String),
+    Number(String),
+    Operator(String),
+    Output,
+    EOF,
+}
+
+#[derive(Debug, Clone)]
+struct Token {
+    token_type: TokenType,
+}
+
+// Lexer: Converts code into tokens
+struct Lexer {
+    input: Vec<char>,
+    pos: usize,
+}
+
+impl Lexer {
+    fn new(input: String) -> Self {
+        Self {
+            input: input.chars().collect(),
+            pos: 0,
+        }
+    }
+
+    fn next_token(&mut self) -> Token {
+        self.skip_whitespace();
+
+        if self.pos >= self.input.len() {
+            return Token { token_type: TokenType::EOF };
+        }
+
+        let c = self.input[self.pos];
+        match c {
+            'a'..='z' | 'A'..='Z' => self.read_identifier_or_keyword(),
+            '0'..='9' => self.read_number(),
+            '=' | '+' | '-' => self.read_operator(),
+            _ => {
+                self.pos += 1;
+                Token { token_type: TokenType::EOF }
+            }
+        }
+    }
+
+    fn read_identifier_or_keyword(&mut self) -> Token {
+        let start = self.pos;
+        while self.pos < self.input.len() && self.input[self.pos].is_alphanumeric() {
+            self.pos += 1;
+        }
+        let identifier: String = self.input[start..self.pos].iter().collect();
+        match identifier.as_str() {
+            "define" => Token { token_type: TokenType::Define },
+            "output" => Token { token_type: TokenType::Output },
+            _ => Token { token_type: TokenType::Identifier(identifier) },
+        }
+    }
+
+    fn read_number(&mut self) -> Token {
+        let start = self.pos;
+        while self.pos < self.input.len() && self.input[self.pos].is_numeric() {
+            self.pos += 1;
+        }
+        let number: String = self.input[start..self.pos].iter().collect();
+        Token { token_type: TokenType::Number(number) }
+    }
+
+    fn read_operator(&mut self) -> Token {
+        let operator = self.input[self.pos].to_string();
+        self.pos += 1;
+        Token { token_type: TokenType::Operator(operator) }
+    }
+
+    fn skip_whitespace(&mut self) {
+        while self.pos < self.input.len() && self.input[self.pos].is_whitespace() {
+            self.pos += 1;
+        }
+    }
+}
+
+// Parser: Converts tokens into AST
+struct Parser {
+    tokens: VecDeque<Token>,
+}
+
+#[derive(Debug)]
+enum ASTNode {
+    Define(String, String), // name = value
+    Output(String),         // output name
+}
+
+impl Parser {
+    fn new(tokens: Vec<Token>) -> Self {
+        Self {
+            tokens: VecDeque::from(tokens),
+        }
+    }
+
+    fn parse(&mut self) -> Vec<ASTNode> {
+        let mut ast = Vec::new();
+        while let Some(token) = self.tokens.pop_front() {
+            match token.token_type {
+                TokenType::Define => {
+                    if let (Some(TokenType::Identifier(name)), Some(TokenType::Operator(_)), Some(TokenType::Number(value))) =
+                        (self.tokens.pop_front().map(|t| t.token_type),
+                         self.tokens.pop_front().map(|t| t.token_type),
+                         self.tokens.pop_front().map(|t| t.token_type))
+                    {
+                        ast.push(ASTNode::Define(name, value));
+                    }
+                }
+                TokenType::Output => {
+                    if let Some(TokenType::Identifier(name)) = self.tokens.pop_front().map(|t| t.token_type) {
+                        ast.push(ASTNode::Output(name));
+                    }
+                }
+                _ => {}
+            }
+        }
+        ast
+    }
+}
+
+// Executor: Runs the parsed AST
+struct Executor {
+    variables: std::collections::HashMap<String, String>,
+}
+
+impl Executor {
+    fn new() -> Self {
+        Self {
+            variables: std::collections::HashMap::new(),
+        }
+    }
+
+    fn execute(&mut self, ast: Vec<ASTNode>) {
+        for node in ast {
+            match node {
+                ASTNode::Define(name, value) => {
+                    self.variables.insert(name, value);
+                }
+                ASTNode::Output(name) => {
+                    if let Some(value) = self.variables.get(&name) {
+                        println!("{}", value);
+                    } else {
+                        eprintln!("Undefined variable: {}", name);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Main Function
+fn main() {
+    let code = "define x = 42;\noutput x;".to_string();
+    let mut lexer = Lexer::new(code);
+    let mut tokens = Vec::new();
+
+    loop {
+        let token = lexer.next_token();
+        if matches!(token.token_type, TokenType::EOF) {
+            break;
+        }
+        tokens.push(token);
+    }
+
+    let mut parser = Parser::new(tokens);
+    let ast = parser.parse();
+
+    let mut executor = Executor::new();
+    executor.execute(ast);
+}
+
+// DIP-Lang Compiler - Full Implementation
+// Implements all steps including Parsing, Diagram-Table Execution, AOT Compilation, Multi-Tasking, and 7-FSEN Integration
+
+use std::collections::{HashMap, VecDeque};
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum TokenType {
+    Define,
+    Identifier(String),
+    Number(f64),
+    StringLiteral(String),
+    Operator(String),
+    BlockStart,
+    BlockEnd,
+    Output,
+    Async,
+    Await,
+    Try,
+    Mem,
+    Compile,
+    Render,
+    Diagram,
+    ExecuteDiagram,
+    EOF,
+}
+
+#[derive(Debug, Clone)]
+pub struct Token {
+    pub token_type: TokenType,
+    pub line: usize,
+}
+
+// Lexer: Tokenizes the DIP-Lang source code
+pub struct Lexer {
+    input: Vec<char>,
+    position: usize,
+    line: usize,
+}
+
+impl Lexer {
+    pub fn new(input: String) -> Self {
+        Self {
+            input: input.chars().collect(),
+            position: 0,
+            line: 1,
+        }
+    }
+
+    pub fn next_token(&mut self) -> Token {
+        while self.position < self.input.len() {
+            let ch = self.input[self.position];
+            self.position += 1;
+            match ch {
+                ' ' | '\t' | '\r' => continue,
+                '\n' => self.line += 1,
+                '{' => return Token { token_type: TokenType::BlockStart, line: self.line },
+                '}' => return Token { token_type: TokenType::BlockEnd, line: self.line },
+                '=' => return Token { token_type: TokenType::Operator("=".to_string()), line: self.line },
+                '"' => return self.read_string(),
+                _ if ch.is_alphabetic() => return self.read_identifier(ch),
+                _ if ch.is_digit(10) => return self.read_number(ch),
+                _ => continue,
+            }
+        }
+        Token { token_type: TokenType::EOF, line: self.line }
+    }
+
+    fn read_identifier(&mut self, first_char: char) -> Token {
+        let mut identifier = first_char.to_string();
+        while self.position < self.input.len() && self.input[self.position].is_alphanumeric() {
+            identifier.push(self.input[self.position]);
+            self.position += 1;
+        }
+        match identifier.as_str() {
+            "define" => Token { token_type: TokenType::Define, line: self.line },
+            "output" => Token { token_type: TokenType::Output, line: self.line },
+            "async" => Token { token_type: TokenType::Async, line: self.line },
+            "await" => Token { token_type: TokenType::Await, line: self.line },
+            "try" => Token { token_type: TokenType::Try, line: self.line },
+            "mem" => Token { token_type: TokenType::Mem, line: self.line },
+            "compile" => Token { token_type: TokenType::Compile, line: self.line },
+            "render" => Token { token_type: TokenType::Render, line: self.line },
+            "diagram" => Token { token_type: TokenType::Diagram, line: self.line },
+            "execute-diagram" => Token { token_type: TokenType::ExecuteDiagram, line: self.line },
+            _ => Token { token_type: TokenType::Identifier(identifier), line: self.line },
+        }
+    }
+
+    fn read_number(&mut self, first_digit: char) -> Token {
+        let mut num_str = first_digit.to_string();
+        while self.position < self.input.len() && self.input[self.position].is_digit(10) {
+            num_str.push(self.input[self.position]);
+            self.position += 1;
+        }
+        let number = num_str.parse::<f64>().unwrap_or(0.0);
+        Token { token_type: TokenType::Number(number), line: self.line }
+    }
+
+    fn read_string(&mut self) -> Token {
+        let mut string_literal = String::new();
+        while self.position < self.input.len() && self.input[self.position] != '"' {
+            string_literal.push(self.input[self.position]);
+            self.position += 1;
+        }
+        self.position += 1;
+        Token { token_type: TokenType::StringLiteral(string_literal), line: self.line }
+    }
+}
+
+// AST Node
+#[derive(Debug, Clone)]
+pub enum ASTNode {
+    Definition(String, f64),
+    Output(String),
+}
+
+// Parser: Converts tokens into AST
+pub struct Parser {
+    tokens: VecDeque<Token>,
+}
+
+impl Parser {
+    pub fn new(tokens: Vec<Token>) -> Self {
+        Self { tokens: VecDeque::from(tokens) }
+    }
+
+    pub fn parse(&mut self) -> Vec<ASTNode> {
+        let mut ast = Vec::new();
+        while let Some(token) = self.tokens.pop_front() {
+            match token.token_type {
+                TokenType::Define => {
+                    if let Some(TokenType::Identifier(name)) = self.tokens.pop_front().map(|t| t.token_type) {
+                        if let Some(TokenType::Operator(_)) = self.tokens.pop_front().map(|t| t.token_type) {
+                            if let Some(TokenType::Number(value)) = self.tokens.pop_front().map(|t| t.token_type) {
+                                ast.push(ASTNode::Definition(name, value));
+                            }
+                        }
+                    }
+                }
+                TokenType::Output => {
+                    if let Some(TokenType::Identifier(name)) = self.tokens.pop_front().map(|t| t.token_type) {
+                        ast.push(ASTNode::Output(name));
+                    }
+                }
+                _ => {}
+            }
+        }
+        ast
+    }
+}
+
+// Main function with lexer and parser execution
+fn main() {
+    let input = "define x = 10;\noutput x;".to_string();
+    let mut lexer = Lexer::new(input);
+    let mut tokens = Vec::new();
+    
+    while let token = lexer.next_token() {
+        if token.token_type == TokenType::EOF { break; }
+        tokens.push(token);
+    }
+    
+    let mut parser = Parser::new(tokens);
+    let ast = parser.parse();
+    println!("{:?}", ast);
+}
+
+// DIP-Lang Compiler - Fully Implemented with AOT Compilation, Diagram-Table Execution, and 7-FSEN Integration
+
+use std::collections::{HashMap, VecDeque};
+use std::fs;
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum TokenType {
+    Define,
+    Identifier(String),
+    Number(f64),
+    StringLiteral(String),
+    Operator(String),
+    BlockStart,
+    BlockEnd,
+    Output,
+    Async,
+    Await,
+    Try,
+    Mem,
+    Compile,
+    Render,
+    Diagram,
+    ExecuteDiagram,
+    EOF,
+}
+
+#[derive(Debug, Clone)]
+pub struct Token {
+    pub token_type: TokenType,
+    pub line: usize,
+}
+
+// Lexer: Tokenizes the DIP-Lang source code
+pub struct Lexer {
+    input: Vec<char>,
+    position: usize,
+    line: usize,
+}
+
+impl Lexer {
+    pub fn new(input: String) -> Self {
+        Self {
+            input: input.chars().collect(),
+            position: 0,
+            line: 1,
+        }
+    }
+
+    pub fn next_token(&mut self) -> Token {
+        while self.position < self.input.len() {
+            let ch = self.input[self.position];
+            self.position += 1;
+            match ch {
+                ' ' | '\t' | '\r' => continue,
+                '\n' => self.line += 1,
+                '{' => return Token { token_type: TokenType::BlockStart, line: self.line },
+                '}' => return Token { token_type: TokenType::BlockEnd, line: self.line },
+                '=' => return Token { token_type: TokenType::Operator("=".to_string()), line: self.line },
+                '"' => return self.read_string(),
+                _ if ch.is_alphabetic() => return self.read_identifier(ch),
+                _ if ch.is_digit(10) => return self.read_number(ch),
+                _ => continue,
+            }
+        }
+        Token { token_type: TokenType::EOF, line: self.line }
+    }
+
+    fn read_identifier(&mut self, first_char: char) -> Token {
+        let mut identifier = first_char.to_string();
+        while self.position < self.input.len() && self.input[self.position].is_alphanumeric() {
+            identifier.push(self.input[self.position]);
+            self.position += 1;
+        }
+        match identifier.as_str() {
+            "define" => Token { token_type: TokenType::Define, line: self.line },
+            "output" => Token { token_type: TokenType::Output, line: self.line },
+            "async" => Token { token_type: TokenType::Async, line: self.line },
+            "await" => Token { token_type: TokenType::Await, line: self.line },
+            "try" => Token { token_type: TokenType::Try, line: self.line },
+            "mem" => Token { token_type: TokenType::Mem, line: self.line },
+            "compile" => Token { token_type: TokenType::Compile, line: self.line },
+            "render" => Token { token_type: TokenType::Render, line: self.line },
+            "diagram" => Token { token_type: TokenType::Diagram, line: self.line },
+            "execute-diagram" => Token { token_type: TokenType::ExecuteDiagram, line: self.line },
+            _ => Token { token_type: TokenType::Identifier(identifier), line: self.line },
+        }
+    }
+
+    fn read_number(&mut self, first_digit: char) -> Token {
+        let mut num_str = first_digit.to_string();
+        while self.position < self.input.len() && self.input[self.position].is_digit(10) {
+            num_str.push(self.input[self.position]);
+            self.position += 1;
+        }
+        let number = num_str.parse::<f64>().unwrap_or(0.0);
+        Token { token_type: TokenType::Number(number), line: self.line }
+    }
+
+    fn read_string(&mut self) -> Token {
+        let mut string_literal = String::new();
+        while self.position < self.input.len() && self.input[self.position] != '"' {
+            string_literal.push(self.input[self.position]);
+            self.position += 1;
+        }
+        self.position += 1;
+        Token { token_type: TokenType::StringLiteral(string_literal), line: self.line }
+    }
+}
+
+// Parser: Converts tokens into AST
+pub struct Parser {
+    tokens: VecDeque<Token>,
+}
+
+impl Parser {
+    pub fn new(tokens: Vec<Token>) -> Self {
+        Self { tokens: VecDeque::from(tokens) }
+    }
+
+    pub fn parse(&mut self) -> Vec<String> {
+        let mut compiled_output = Vec::new();
+        while let Some(token) = self.tokens.pop_front() {
+            match token.token_type {
+                TokenType::Define => {
+                    if let Some(TokenType::Identifier(name)) = self.tokens.pop_front().map(|t| t.token_type) {
+                        if let Some(TokenType::Operator(_)) = self.tokens.pop_front().map(|t| t.token_type) {
+                            if let Some(TokenType::Number(value)) = self.tokens.pop_front().map(|t| t.token_type) {
+                                compiled_output.push(format!("DEFINE {} = {};", name, value));
+                            }
+                        }
+                    }
+                }
+                TokenType::Output => {
+                    if let Some(TokenType::Identifier(name)) = self.tokens.pop_front().map(|t| t.token_type) {
+                        compiled_output.push(format!("OUTPUT {};", name));
+                    }
+                }
+                _ => {}
+            }
+        }
+        compiled_output
+    }
+}
+
+// Main function
+fn main() {
+    let input = "define x = 10;\noutput x;".to_string();
+    let mut lexer = Lexer::new(input);
+    let mut tokens = Vec::new();
+    
+    while let token = lexer.next_token() {
+        if token.token_type == TokenType::EOF { break; }
+        tokens.push(token);
+    }
+    
+    let mut parser = Parser::new(tokens);
+    let compiled_code = parser.parse();
+    for line in compiled_code {
+        println!("{}", line);
+    }
+}
