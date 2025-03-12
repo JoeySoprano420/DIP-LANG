@@ -2,7 +2,7 @@
 
 "DIP-Lang: Redefining Programming Efficiency with Logic, Precision, and Innovation."
 
-Core Features of DIP-Lang and // DIP-Lang Compiler - Fully Implemented with AOT Compilation, Diagram-Table Execution, and 7-FSEN Integration:
+Core Features of DIP-Lang and DIP-Lang Compiler - Fully Implemented with AOT Compilation, Diagram-Table Execution, and 7-FSEN Integration:
 
 Explicit-Dynamic Type Structure: Combines dynamic flexibility with clear type definitions.
 
