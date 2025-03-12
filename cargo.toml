@@ -1,0 +1,3 @@
+[dependencies]
+sysinfo = "0.24"
+rand = "0.8"
