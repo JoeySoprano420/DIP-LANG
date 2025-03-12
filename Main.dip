@@ -1,5 +1,3 @@
-// DIP-Lang Compiler - Fully Implemented with AOT Compilation, Diagram-Table Execution, and 7-FSEN Integration
-
 use std::collections::{HashMap, VecDeque};
 use std::fs;
 
