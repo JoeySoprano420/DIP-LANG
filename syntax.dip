@@ -975,3 +975,34 @@ result:
     name: "Item 2"
     value: 450
     status: "inactive"
+
+system "UnifiedProject" {
+    environment "Env1" {
+        inline "FileProcessing": process_file("input.txt");
+        
+        file "data.txt" read {
+            analyze_data();
+            validate_content();
+        }
+        
+        node "Node1" {
+            setup_environment();
+            execute_task("Task1");
+        }
+    }
+
+    environment "Env2" {
+        inline "QuickAction": compress_file("results.zip");
+        
+        module "DataHandling" {
+            load_data("dataset.csv");
+            transform_data();
+            save_output("final.csv");
+        }
+        
+        node "Node2" {
+            connect_to("Database");
+            synchronize_data();
+        }
+    }
+}
