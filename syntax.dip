@@ -71,3 +71,850 @@ use "C:\\Users\\420up\\OneDrive\\Language conversion chart.docx" as reference;
 
 # Full Language Compatibility Ensured
 # End of Example Syntax
+
+
+
+
+and	0x1D2	111010010
+or	0x1D3	111010011
+xor	0x1D4	111010100
+not	0x1D5	111010101
+and_eq	0x1D6	111010110
+or_eq	0x1D7	111010111
+xor_eq	0x1D8	111011000
+not_eq	0x1D9	111011001
+reinterpret_cast	0x1DA	111011010
+dynamic_cast	0x1DB	111011011
+static_cast	0x1DC	111011100
+const_cast	0x1DD	111011101
+is_base_of	0x1DE	111011110
+is_convertible	0x1DF	111011111
+nullptr	0x1E0	111100000
+throw	0x1E1	111100001
+try	0x1E2	111100010
+catch	0x1E3	111100011
+finally	0x1E4	111100100
+assert	0x1E5	111100101
+noexcept	0x1E6	111100110
+volatile	0x1E7	111100111
+mutable	0x1E8	111101000
+atomic	0x1E9	111101001
+static_assert	0x1EA	111101010
+thread_local	0x1EB	111101011
+typedef	0x1EC	111101100
+template	0x1ED	111101101
+typename	0x1EE	111101110
+namespace	0x1EF	111101111
+class	0x1F0	111110000
+struct	0x1F1	111110001
+union	0x1F2	111110010
+enum	0x1F3	111110011
+friend	0x1F4	111110100
+public	0x1F5	111110101
+private	0x1F6	111110110
+protected	0x1F7	111110111
+virtual	0x1F8	111111000
+explicit	0x1F9	111111001
+inline	0x1FA	111111010
+constexpr	0x1FB	111111011
+noexcept	0x1FC	111111100
+alignas	0x1FD	111111101
+alignof	0x1FE	111111110
+sizeof	0x1FF	111111111
+typeid	0x200	1000000000
+new	0x201	1000000001
+delete	0x202	1000000010
+new[]	0x203	1000000011
+delete[]	0x204	1000000100
+if	0x205	1000000101
+else	0x206	1000000110
+switch	0x207	1000000111
+case	0x208	1000001000
+default	0x209	1000001001
+while	0x20A	1000001010
+for	0x20B	1000001011
+do	0x20C	1000001100
+break	0x20D	1000001101
+continue	0x20E	1000001110
+return	0x20F	1000001111
+goto	0x210	1000010000
+try	0x211	1000010001
+catch	0x212	1000010010
+throw	0x213	1000010011
+final	0x214	1000010100
+override	0x215	1000010101
+void	0x216	1000010110
+bool	0x217	1000010111
+char	0x218	1000011000
+int	0x219	1000011001
+float	0x21A	1000011010
+double	0x21B	1000011011
+long	0x21C	1000011100
+short	0x21D	1000011101
+signed	0x21E	1000011110
+unsigned	0x21F	1000011111
+const	0x220	1000100000
+volatile	0x221	1000100001
+mutable	0x222	1000100010
+inline	0x223	1000100011
+register	0x224	1000100100
+auto	0x225	1000100101
+decltype	0x226	1000100110
+typeid	0x227	1000100111
+decltype	0x228	1000101000
+noexcept	0x229	1000101001
+constexpr	0x22A	1000101010
+final	0x22B	1000101011
+
+and	0x1D2	111010010
+or	0x1D3	111010011
+xor	0x1D4	111010100
+not	0x1D5	111010101
+and_eq	0x1D6	111010110
+or_eq	0x1D7	111010111
+xor_eq	0x1D8	111011000
+not_eq	0x1D9	111011001
+reinterpret_cast	0x1DA	111011010
+dynamic_cast	0x1DB	111011011
+static_cast	0x1DC	111011100
+const_cast	0x1DD	111011101
+is_base_of	0x1DE	111011110
+is_convertible	0x1DF	111011111
+nullptr	0x1E0	111100000
+throw	0x1E1	111100001
+try	0x1E2	111100010
+catch	0x1E3	111100011
+finally	0x1E4	111100100
+assert	0x1E5	111100101
+noexcept	0x1E6	111100110
+volatile	0x1E7	111100111
+mutable	0x1E8	111101000
+atomic	0x1E9	111101001
+static_assert	0x1EA	111101010
+thread_local	0x1EB	111101011
+typedef	0x1EC	111101100
+template	0x1ED	111101101
+typename	0x1EE	111101110
+namespace	0x1EF	111101111
+class	0x1F0	111110000
+struct	0x1F1	111110001
+union	0x1F2	111110010
+enum	0x1F3	111110011
+friend	0x1F4	111110100
+public	0x1F5	111110101
+private	0x1F6	111110110
+protected	0x1F7	111110111
+virtual	0x1F8	111111000
+explicit	0x1F9	111111001
+inline	0x1FA	111111010
+constexpr	0x1FB	111111011
+noexcept	0x1FC	111111100
+alignas	0x1FD	111111101
+alignof	0x1FE	111111110
+sizeof	0x1FF	111111111
+typeid	0x200	1000000000
+new	0x201	1000000001
+delete	0x202	1000000010
+new[]	0x203	1000000011
+delete[]	0x204	1000000100
+if	0x205	1000000101
+else	0x206	1000000110
+switch	0x207	1000000111
+case	0x208	1000001000
+default	0x209	1000001001
+while	0x20A	1000001010
+for	0x20B	1000001011
+do	0x20C	1000001100
+break	0x20D	1000001101
+continue	0x20E	1000001110
+return	0x20F	1000001111
+goto	0x210	1000010000
+try	0x211	1000010001
+catch	0x212	1000010010
+throw	0x213	1000010011
+final	0x214	1000010100
+override	0x215	1000010101
+void	0x216	1000010110
+bool	0x217	1000010111
+char	0x218	1000011000
+int	0x219	1000011001
+float	0x21A	1000011010
+double	0x21B	1000011011
+long	0x21C	1000011100
+short	0x21D	1000011101
+signed	0x21E	1000011110
+unsigned	0x21F	1000011111
+const	0x220	1000100000
+volatile	0x221	1000100001
+mutable	0x222	1000100010
+inline	0x223	1000100011
+register	0x224	1000100100
+auto	0x225	1000100101
+decltype	0x226	1000100110
+typeid	0x227	1000100111
+decltype	0x228	1000101000
+noexcept	0x229	1000101001
+constexpr	0x22A	1000101010
+final	0x22B	1000101011
+
+sizeof	0x22C	1000101100
+alignof	0x22D	1000101101
+alignas	0x22E	1000101110
+decltype	0x22F	1000101111
+decltype(auto)	0x230	1000110000
+typeof	0x231	1000110001
+type_traits	0x232	1000110010
+type_info	0x233	1000110011
+dynamic	0x234	1000110100
+thread	0x235	1000110101
+atomic	0x236	1000110110
+async	0x237	1000110111
+await	0x238	1000111000
+mutex	0x239	1000111001
+lock_guard	0x23A	1000111010
+unique_lock	0x23B	1000111011
+condition_variable	0x23C	1000111100
+future	0x23D	1000111101
+promise	0x23E	1000111110
+std::array	0x23F	1000111111
+std::vector	0x240	1001000000
+std::map	0x241	1001000001
+std::set	0x242	1001000010
+std::unordered_map	0x243	1001000011
+std::unordered_set	0x244	1001000100
+std::tuple	0x245	1001000101
+std::deque	0x246	1001000110
+std::list	0x247	1001000111
+std::queue	0x248	1001001000
+std::stack	0x249	1001001001
+std::priority_queue	0x24A	1001001010
+std::bitset	0x24B	1001001011
+std::string	0x24C	1001001100
+std::wstring	0x24D	1001001101
+std::shared_ptr	0x24E	1001001110
+std::unique_ptr	0x24F	1001001111
+std::weak_ptr	0x250	1001010000
+std::function	0x251	1001010001
+std::bind	0x252	1001010010
+std::ref	0x253	1001010011
+std::move	0x254	1001010100
+std::forward	0x255	1001010101
+std::allocator	0x256	1001010110
+std::ios	0x257	1001010111
+std::istream	0x258	1001011000
+std::ostream	0x259	1001011001
+std::stringstream	0x25A	1001011010
+std::ifstream	0x25B	1001011011
+std::ofstream	0x25C	1001011100
+std::filebuf	0x25D	1001011101
+std::string_view	0x25E	1001011110
+std::array	0x25F	1001011111
+std::unordered_map	0x260	1001100000
+std::unordered_set	0x261	1001100001
+std::tuple	0x262	1001100010
+std::array	0x263	1001100011
+std::vector	0x264	1001100100
+std::queue	0x265	1001100101
+std::stack	0x266	1001100110
+std::map	0x267	1001100111
+std::set	0x268	1001101000
+
+constexpr	0x270	1001101000
+noexcept	0x271	1001101001
+alignas	0x272	1001101010
+typename	0x273	1001101011
+static_assert	0x274	1001101100
+static_cast	0x275	1001101101
+dynamic_cast	0x276	1001101110
+reinterpret_cast	0x277	1001101111
+const_cast	0x278	1001110000
+template	0x279	1001110001
+namespace	0x27A	1001110010
+using	0x27B	1001110011
+friend	0x27C	1001110100
+explicit	0x27D	1001110101
+virtual	0x27E	1001110110
+override	0x27F	1001110111
+final	0x280	1001111000
+private	0x281	1001111001
+protected	0x282	1001111010
+public	0x283	1001111011
+virtual	0x284	1001111100
+inline	0x285	1001111101
+thread_local	0x286	1001111110
+decltype	0x287	1001111111
+decltype(auto)	0x288	1010000000
+new	0x289	1010000001
+delete	0x28A	1010000010
+try	0x28B	1010000011
+catch	0x28C	1010000100
+throw	0x28D	1010000101
+
+union	0x28E	1010000110
+constexpr_if	0x28F	1010000111
+alignof	0x290	1010001000
+typeid	0x291	1010001001
+sizeof	0x292	1010001010
+decltype	0x293	1010001011
+sizeof...	0x294	1010001100
+explicit(false)	0x295	1010001101
+template<class... Args>	0x296	1010001110
+std::move	0x297	1010001111
+std::forward	0x298	1010010000
+std::enable_if	0x299	1010010001
+std::is_same	0x29A	1010010010
+std::is_convertible	0x29B	1010010011
+std::declval	0x29C	1010010100
+std::tuple	0x29D	1010010101
+std::variant	0x29E	1010010110
+std::any	0x29F	1010010111
+std::optional	0x2A0	1010011000
+std::atomic<T>	0x2A1	1010011001
+
+union	0x28E	1010000110
+constexpr_if	0x28F	1010000111
+alignof	0x290	1010001000
+typeid	0x291	1010001001
+sizeof	0x292	1010001010
+decltype	0x293	1010001011
+sizeof...	0x294	1010001100
+explicit(false)	0x295	1010001101
+template<class... Args>	0x296	1010001110
+std::move	0x297	1010001111
+std::forward	0x298	1010010000
+std::enable_if	0x299	1010010001
+std::is_same	0x29A	1010010010
+std::is_convertible	0x29B	1010010011
+std::declval	0x29C	1010010100
+std::tuple	0x29D	1010010101
+std::variant	0x29E	1010010110
+std::any	0x29F	1010010111
+std::optional	0x2A0	1010011000
+std::atomic<T>	0x2A1	1010011001
+Automatic Reference Counting (ARC)	0x2A2	1010011010
+Lazy Evaluation	0x2A3	1010011011
+Cache-Friendly Data Structures	0x2A4	1010011100
+Memory Pooling and Custom Allocators	0x2A5	1010011101
+Memory Overlap and Optimizing for NUMA	0x2A6	1010011110
+Lock-Free Algorithms	0x2A7	1010011111
+Transactional Memory	0x2A8	1010100000
+Extended Coroutines Support	0x2A9	1010100001
+Executor Framework	0x2AA	1010100010
+Concepts (C++20)	0x2AB	1010100011
+Type Erasure	0x2AC	1010100100
+Compile-Time Reflection	0x2AD	1010100101
+Cross-Platform Development with C++	0x2AE	1010100110
+WebAssembly (WASM) Integration	0x2AF	1010100111
+Foreign Function Interfaces (FFI)	0x2B0	1010101000
+Embedded Systems Integration	0x2B1	1010101001
+Memory Safety and Bounds Checking	0x2B2	1010101010
+Static Code Analysis	0x2B3	1010101011
+Safe Pointers and Bounds Checking	0x2B4	1010101100
+Static Memory Management	0x2B5	1010101101
+Atomic Operations	0x2B6	1010101110
+Optimized Algorithms	0x2B7	1010101111
+Lock-Free Data Structures	0x2B8	1010110000
+Predictive Register Allocation	0x2B9	1010110001
+Memory Optimization	0x2BA	1010110010
+Zero-Copy Data Handling	0x2BB	1010110011
+Asynchronous Programming and Coroutines	0x2BC	1010110100
+Real-Time Monitoring and Profiling	0x2BD	1010110101
+High-Speed Networking	0x2BE	1010110110
+Fault Tolerance and Consensus	0x2BF	1010110111
+
+union	0x28E	1010000110
+constexpr_if	0x28F	1010000111
+alignof	0x290	1010001000
+typeid	0x291	1010001001
+sizeof	0x292	1010001010
+decltype	0x293	1010001011
+sizeof...	0x294	1010001100
+explicit(false)	0x295	1010001101
+template<class... Args>	0x296	1010001110
+std::move	0x297	1010001111
+std::forward	0x298	1010010000
+std::enable_if	0x299	1010010001
+std::is_same	0x29A	1010010010
+std::is_convertible	0x29B	1010010011
+std::declval	0x29C	1010010100
+std::tuple	0x29D	1010010101
+std::variant	0x29E	1010010110
+std::any	0x29F	1010010111
+std::optional	0x2A0	1010011000
+std::atomic<T>	0x2A1	1010011001
+Automatic Reference Counting (ARC)	0x2A2	1010011010
+Lazy Evaluation	0x2A3	1010011011
+Cache-Friendly Data Structures	0x2A4	1010011100
+Memory Pooling and Custom Allocators	0x2A5	1010011101
+Memory Overlap and Optimizing for NUMA	0x2A6	1010011110
+Lock-Free Algorithms	0x2A7	1010011111
+Transactional Memory	0x2A8	1010100000
+Extended Coroutines Support	0x2A9	1010100001
+Executor Framework	0x2AA	1010100010
+Concepts (C++20)	0x2AB	1010100011
+Type Erasure	0x2AC	1010100100
+Compile-Time Reflection	0x2AD	1010100101
+Cross-Platform Development with C++	0x2AE	1010100110
+WebAssembly (WASM) Integration	0x2AF	1010100111
+Foreign Function Interfaces (FFI)	0x2B0	1010101000
+Embedded Systems Integration	0x2B1	1010101001
+Memory Safety and Bounds Checking	0x2B2	1010101010
+Static Code Analysis	0x2B3	1010101011
+Safe Pointers and Bounds Checking	0x2B4	1010101100
+Static Memory Management	0x2B5	1010101101
+Atomic Operations	0x2B6	1010101110
+Optimized Algorithms	0x2B7	1010101111
+Lock-Free Data Structures	0x2B8	1010110000
+Predictive Register Allocation	0x2B9	1010110001
+Memory Optimization	0x2BA	1010110010
+Zero-Copy Data Handling	0x2BB	1010110011
+Asynchronous Programming and Coroutines	0x2BC	1010110100
+Real-Time Monitoring and Profiling	0x2BD	1010110101
+High-Speed Networking	0x2BE	1010110110
+Fault Tolerance and Consensus	0x2BF	1010110111
+Distributed Consensus Protocols	0x2C0	1010111000
+Graph Databases	0x2C1	1010111001
+Event-Driven Programming	0x2C2	1010111010
+Functional Reactive Programming (FRP)	0x2C3	1010111011
+Smart Contracts (Blockchain)	0x2C4	1010111100
+Machine Learning Integrations	0x2C5	1010111101
+Quantitative Finance Algorithms	0x2C6	1010111110
+Adaptive Load Balancing	0x2C7	1010111111
+Real-Time Collaborative Systems	0x2C8	1011000000
+Distributed Machine Learning (DML)	0x2C9	1011000001
+Quantum Computing Integration	0x2CA	1011000010
+Augmented Reality (AR) Support	0x2CB	1011000011
+Virtual Reality (VR) Framework	0x2CC	1011000100
+Multi-Agent Systems (MAS)	0x2CD	1011000101
+Neural Network API	0x2CE	1011000110
+Reinforcement Learning Framework	0x2CF	1011000111
+Artificial Intelligence (AI) Optimization	0x2D0	1011001000
+Cloud-Native Development	0x2D1	1011001001
+Serverless Computing Architecture	0x2D2	1011001010
+Microservices Framework	0x2D3	1011001011
+Edge Computing and IoT	0x2D4	1011001100
+Fog Computing Support	0x2D5	1011001101
+Data Streaming and Real-Time Analytics	0x2D6	1011001110
+Event Sourcing	0x2D7	1011001111
+Distributed Tracing	0x2D8	1011010000
+Real-Time Data Pipelines	0x2D9	1011010001
+
+union	0x28E	1010000110
+constexpr_if	0x28F	1010000111
+alignof	0x290	1010001000
+typeid	0x291	1010001001
+sizeof	0x292	1010001010
+decltype	0x293	1010001011
+sizeof...	0x294	1010001100
+explicit(false)	0x295	1010001101
+template<class... Args>	0x296	1010001110
+std::move	0x297	1010001111
+std::forward	0x298	1010010000
+std::enable_if	0x299	1010010001
+std::is_same	0x29A	1010010010
+std::is_convertible	0x29B	1010010011
+std::declval	0x29C	1010010100
+std::tuple	0x29D	1010010101
+std::variant	0x29E	1010010110
+std::any	0x29F	1010010111
+std::optional	0x2A0	1010011000
+std::atomic<T>	0x2A1	1010011001
+Automatic Reference Counting (ARC)	0x2A2	1010011010
+Lazy Evaluation	0x2A3	1010011011
+Cache-Friendly Data Structures	0x2A4	1010011100
+Memory Pooling and Custom Allocators	0x2A5	1010011101
+Memory Overlap and Optimizing for NUMA	0x2A6	1010011110
+Lock-Free Algorithms	0x2A7	1010011111
+Transactional Memory	0x2A8	1010100000
+Extended Coroutines Support	0x2A9	1010100001
+Executor Framework	0x2AA	1010100010
+Concepts (C++20)	0x2AB	1010100011
+Type Erasure	0x2AC	1010100100
+Compile-Time Reflection	0x2AD	1010100101
+Cross-Platform Development with C++	0x2AE	1010100110
+WebAssembly (WASM) Integration	0x2AF	1010100111
+Foreign Function Interfaces (FFI)	0x2B0	1010101000
+Embedded Systems Integration	0x2B1	1010101001
+Memory Safety and Bounds Checking	0x2B2	1010101010
+Static Code Analysis	0x2B3	1010101011
+Safe Pointers and Bounds Checking	0x2B4	1010101100
+Static Memory Management	0x2B5	1010101101
+Atomic Operations	0x2B6	1010101110
+Optimized Algorithms	0x2B7	1010101111
+Lock-Free Data Structures	0x2B8	1010110000
+Predictive Register Allocation	0x2B9	1010110001
+Memory Optimization	0x2BA	1010110010
+Zero-Copy Data Handling	0x2BB	1010110011
+Asynchronous Programming and Coroutines	0x2BC	1010110100
+Real-Time Monitoring and Profiling	0x2BD	1010110101
+High-Speed Networking	0x2BE	1010110110
+Fault Tolerance and Consensus	0x2BF	1010110111
+
+union	0x28E	1010000110
+constexpr_if	0x28F	1010000111
+alignof	0x290	1010001000
+typeid	0x291	1010001001
+sizeof	0x292	1010001010
+decltype	0x293	1010001011
+sizeof...	0x294	1010001100
+explicit(false)	0x295	1010001101
+template<class... Args>	0x296	1010001110
+std::move	0x297	1010001111
+std::forward	0x298	1010010000
+std::enable_if	0x299	1010010001
+std::is_same	0x29A	1010010010
+std::is_convertible	0x29B	1010010011
+std::declval	0x29C	1010010100
+std::tuple	0x29D	1010010101
+std::variant	0x29E	1010010110
+std::any	0x29F	1010010111
+std::optional	0x2A0	1010011000
+std::atomic<T>	0x2A1	1010011001
+Automatic Reference Counting (ARC)	0x2A2	1010011010
+Lazy Evaluation	0x2A3	1010011011
+Cache-Friendly Data Structures	0x2A4	1010011100
+Memory Pooling and Custom Allocators	0x2A5	1010011101
+Memory Overlap and Optimizing for NUMA	0x2A6	1010011110
+Lock-Free Algorithms	0x2A7	1010011111
+Transactional Memory	0x2A8	1010100000
+Extended Coroutines Support	0x2A9	1010100001
+Executor Framework	0x2AA	1010100010
+Concepts (C++20)	0x2AB	1010100011
+Type Erasure	0x2AC	1010100100
+Compile-Time Reflection	0x2AD	1010100101
+Cross-Platform Development with C++	0x2AE	1010100110
+WebAssembly (WASM) Integration	0x2AF	1010100111
+Foreign Function Interfaces (FFI)	0x2B0	1010101000
+Embedded Systems Integration	0x2B1	1010101001
+Memory Safety and Bounds Checking	0x2B2	1010101010
+Static Code Analysis	0x2B3	1010101011
+Safe Pointers and Bounds Checking	0x2B4	1010101100
+Static Memory Management	0x2B5	1010101101
+Atomic Operations	0x2B6	1010101110
+Optimized Algorithms	0x2B7	1010101111
+Lock-Free Data Structures	0x2B8	1010110000
+Predictive Register Allocation	0x2B9	1010110001
+Memory Optimization	0x2BA	1010110010
+Zero-Copy Data Handling	0x2BB	1010110011
+Asynchronous Programming and Coroutines	0x2BC	1010110100
+Real-Time Monitoring and Profiling	0x2BD	1010110101
+High-Speed Networking	0x2BE	1010110110
+Fault Tolerance and Consensus	0x2BF	1010110111
+Distributed Consensus Protocols	0x2C0	1010111000
+Graph Databases	0x2C1	1010111001
+Event-Driven Programming	0x2C2	1010111010
+Functional Reactive Programming (FRP)	0x2C3	1010111011
+Smart Contracts (Blockchain)	0x2C4	1010111100
+Machine Learning Integrations	0x2C5	1010111101
+Quantitative Finance Algorithms	0x2C6	1010111110
+Adaptive Load Balancing	0x2C7	1010111111
+Real-Time Collaborative Systems	0x2C8	1011000000
+Distributed Machine Learning (DML)	0x2C9	1011000001
+Quantum Computing Integration	0x2CA	1011000010
+Augmented Reality (AR) Support	0x2CB	1011000011
+Virtual Reality (VR) Framework	0x2CC	1011000100
+Multi-Agent Systems (MAS)	0x2CD	1011000101
+Neural Network API	0x2CE	1011000110
+Reinforcement Learning Framework	0x2CF	1011000111
+Artificial Intelligence (AI) Optimization	0x2D0	1011001000
+Cloud-Native Development	0x2D1	1011001001
+Serverless Computing Architecture	0x2D2	1011001010
+Microservices Framework	0x2D3	1011001011
+Edge Computing and IoT	0x2D4	1011001100
+Fog Computing Support	0x2D5	1011001101
+Data Streaming and Real-Time Analytics	0x2D6	1011001110
+Event Sourcing	0x2D7	1011001111
+Distributed Tracing	0x2D8	1011010000
+Real-Time Data Pipelines	0x2D9	1011010001
+
+union	0x28E	1010000110
+constexpr_if	0x28F	1010000111
+alignof	0x290	1010001000
+typeid	0x291	1010001001
+sizeof	0x292	1010001010
+decltype	0x293	1010001011
+sizeof...	0x294	1010001100
+explicit(false)	0x295	1010001101
+template<class... Args>	0x296	1010001110
+std::move	0x297	1010001111
+std::forward	0x298	1010010000
+std::enable_if	0x299	1010010001
+std::is_same	0x29A	1010010010
+std::is_convertible	0x29B	1010010011
+std::declval	0x29C	1010010100
+std::tuple	0x29D	1010010101
+std::variant	0x29E	1010010110
+std::any	0x29F	1010010111
+std::optional	0x2A0	1010011000
+std::atomic<T>	0x2A1	1010011001
+Automatic Reference Counting (ARC)	0x2A2	1010011010
+Lazy Evaluation	0x2A3	1010011011
+Cache-Friendly Data Structures	0x2A4	1010011100
+Memory Pooling and Custom Allocators	0x2A5	1010011101
+Memory Overlap and Optimizing for NUMA	0x2A6	1010011110
+Lock-Free Algorithms	0x2A7	1010011111
+Transactional Memory	0x2A8	1010100000
+Extended Coroutines Support	0x2A9	1010100001
+Executor Framework	0x2AA	1010100010
+Concepts (C++20)	0x2AB	1010100011
+Type Erasure	0x2AC	1010100100
+Compile-Time Reflection	0x2AD	1010100101
+Cross-Platform Development with C++	0x2AE	1010100110
+WebAssembly (WASM) Integration	0x2AF	1010100111
+Foreign Function Interfaces (FFI)	0x2B0	1010101000
+Embedded Systems Integration	0x2B1	1010101001
+Memory Safety and Bounds Checking	0x2B2	1010101010
+Static Code Analysis	0x2B3	1010101011
+Safe Pointers and Bounds Checking	0x2B4	1010101100
+Static Memory Management	0x2B5	1010101101
+Atomic Operations	0x2B6	1010101110
+Optimized Algorithms	0x2B7	1010101111
+Lock-Free Data Structures	0x2B8	1010110000
+Predictive Register Allocation	0x2B9	1010110001
+Memory Optimization	0x2BA	1010110010
+Zero-Copy Data Handling	0x2BB	1010110011
+Asynchronous Programming and Coroutines	0x2BC	1010110100
+Real-Time Monitoring and Profiling	0x2BD	1010110101
+High-Speed Networking	0x2BE	1010110110
+Fault Tolerance and Consensus	0x2BF	1010110111
+Distributed Consensus Protocols	0x2C0	1010111000
+Graph Databases	0x2C1	1010111001
+Event-Driven Programming	0x2C2	1010111010
+Functional Reactive Programming (FRP)	0x2C3	1010111011
+Smart Contracts (Blockchain)	0x2C4	1010111100
+Machine Learning Integrations	0x2C5	1010111101
+Quantitative Finance Algorithms	0x2C6	1010111110
+Adaptive Load Balancing	0x2C7	1010111111
+Real-Time Collaborative Systems	0x2C8	1011000000
+Distributed Machine Learning (DML)	0x2C9	1011000001
+Quantum Computing Integration	0x2CA	1011000010
+Augmented Reality (AR) Support	0x2CB	1011000011
+Virtual Reality (VR) Framework	0x2CC	1011000100
+Multi-Agent Systems (MAS)	0x2CD	1011000101
+Neural Network API	0x2CE	1011000110
+Reinforcement Learning Framework	0x2CF	1011000111
+Artificial Intelligence (AI) Optimization	0x2D0	1011001000
+Cloud-Native Development	0x2D1	1011001001
+Serverless Computing Architecture	0x2D2	1011001010
+Microservices Framework	0x2D3	1011001011
+Edge Computing and IoT	0x2D4	1011001100
+Fog Computing Support	0x2D5	1011001101
+Data Streaming and Real-Time Analytics	0x2D6	1011001110
+Event Sourcing	0x2D7	1011001111
+Distributed Tracing	0x2D8	1011010000
+Real-Time Data Pipelines	0x2D9	1011010001
+Advanced Cryptography and Zero-Knowledge Proofs	0x2DA	1011010010
+Privacy-Preserving Computation	0x2DB	1011010011
+Multi-Layered Security Architecture	0x2DC	1011010100
+Heterogeneous Computing	0x2DD	1011010101
+Low-Latency Systems Design	0x2DE	1011010110
+Time-Sensitive Networking (TSN)	0x2DF	1011010111
+Adaptive Compression Algorithms	0x2E0	1011011000
+Real-Time Data Aggregation	0x2E1	1011011001
+High-Resolution Simulation Systems	0x2E2	1011011010
+Quantum-Resistant Algorithms	0x2E3	1011011011
+Distributed Ledger Technology (DLT)	0x2E4	1011011100
+Self-Healing Systems	0x2E5	1011011101
+Decentralized Autonomous Organizations (DAO)	0x2E6	1011011110
+Real-Time Collaborative Editing	0x2E7	1011011111
+Autonomous Systems and Robotics	0x2E8	1011100000
+Blockchain Consensus Algorithms	0x2E9	1011100001
+Cross-Chain Interoperability	0x2EA	1011100010
+
+union	0x28E	1010000110
+constexpr_if	0x28F	1010000111
+alignof	0x290	1010001000
+typeid	0x291	1010001001
+sizeof	0x292	1010001010
+decltype	0x293	1010001011
+sizeof...	0x294	1010001100
+explicit(false)	0x295	1010001101
+template<class... Args>	0x296	1010001110
+std::move	0x297	1010001111
+std::forward	0x298	1010010000
+std::enable_if	0x299	1010010001
+std::is_same	0x29A	1010010010
+std::is_convertible	0x29B	1010010011
+std::declval	0x29C	1010010100
+std::tuple	0x29D	1010010101
+std::variant	0x29E	1010010110
+std::any	0x29F	1010010111
+std::optional	0x2A0	1010011000
+std::atomic<T>	0x2A1	1010011001
+Automatic Reference Counting (ARC)	0x2A2	1010011010
+Lazy Evaluation	0x2A3	1010011011
+Cache-Friendly Data Structures	0x2A4	1010011100
+Memory Pooling and Custom Allocators	0x2A5	1010011101
+Memory Overlap and Optimizing for NUMA	0x2A6	1010011110
+Lock-Free Algorithms	0x2A7	1010011111
+Transactional Memory	0x2A8	1010100000
+Extended Coroutines Support	0x2A9	1010100001
+Executor Framework	0x2AA	1010100010
+Concepts (C++20)	0x2AB	1010100011
+Type Erasure	0x2AC	1010100100
+Compile-Time Reflection	0x2AD	1010100101
+Cross-Platform Development with C++	0x2AE	1010100110
+WebAssembly (WASM) Integration	0x2AF	1010100111
+Foreign Function Interfaces (FFI)	0x2B0	1010101000
+Embedded Systems Integration	0x2B1	1010101001
+Memory Safety and Bounds Checking	0x2B2	1010101010
+Static Code Analysis	0x2B3	1010101011
+Safe Pointers and Bounds Checking	0x2B4	1010101100
+Static Memory Management	0x2B5	1010101101
+Atomic Operations	0x2B6	1010101110
+Optimized Algorithms	0x2B7	1010101111
+Lock-Free Data Structures	0x2B8	1010110000
+Predictive Register Allocation	0x2B9	1010110001
+Memory Optimization	0x2BA	1010110010
+Zero-Copy Data Handling	0x2BB	1010110011
+Asynchronous Programming and Coroutines	0x2BC	1010110100
+Real-Time Monitoring and Profiling	0x2BD	1010110101
+High-Speed Networking	0x2BE	1010110110
+Fault Tolerance and Consensus	0x2BF	1010110111
+Distributed Consensus Protocols	0x2C0	1010111000
+Graph Databases	0x2C1	1010111001
+Event-Driven Programming	0x2C2	1010111010
+Functional Reactive Programming (FRP)	0x2C3	1010111011
+Smart Contracts (Blockchain)	0x2C4	1010111100
+Machine Learning Integrations	0x2C5	1010111101
+Quantitative Finance Algorithms	0x2C6	1010111110
+Adaptive Load Balancing	0x2C7	1010111111
+Real-Time Collaborative Systems	0x2C8	1011000000
+Distributed Machine Learning (DML)	0x2C9	1011000001
+Quantum Computing Integration	0x2CA	1011000010
+Augmented Reality (AR) Support	0x2CB	1011000011
+Virtual Reality (VR) Framework	0x2CC	1011000100
+Multi-Agent Systems (MAS)	0x2CD	1011000101
+Neural Network API	0x2CE	1011000110
+Reinforcement Learning Framework	0x2CF	1011000111
+Artificial Intelligence (AI) Optimization	0x2D0	1011001000
+Cloud-Native Development	0x2D1	1011001001
+Serverless Computing Architecture	0x2D2	1011001010
+Microservices Framework	0x2D3	1011001011
+Edge Computing and IoT	0x2D4	1011001100
+Fog Computing Support	0x2D5	1011001101
+Data Streaming and Real-Time Analytics	0x2D6	1011001110
+Event Sourcing	0x2D7	1011001111
+Distributed Tracing	0x2D8	1011010000
+Real-Time Data Pipelines	0x2D9	1011010001
+Advanced Cryptography and Zero-Knowledge Proofs	0x2DA	1011010010
+Privacy-Preserving Computation	0x2DB	1011010011
+Multi-Layered Security Architecture	0x2DC	1011010100
+Heterogeneous Computing	0x2DD	1011010101
+Low-Latency Systems Design	0x2DE	1011010110
+Time-Sensitive Networking (TSN)	0x2DF	1011010111
+Adaptive Compression Algorithms	0x2E0	1011011000
+Real-Time Data Aggregation	0x2E1	1011011001
+High-Resolution Simulation Systems	0x2E2	1011011010
+Quantum-Resistant Algorithms	0x2E3	1011011011
+Distributed Ledger Technology (DLT)	0x2E4	1011011100
+Self-Healing Systems	0x2E5	1011011101
+Decentralized Autonomous Organizations (DAO)	0x2E6	1011011110
+Real-Time Collaborative Editing	0x2E7	1011011111
+Autonomous Systems and Robotics	0x2E8	1011100000
+Blockchain Consensus Algorithms	0x2E9	1011100001
+Cross-Chain Interoperability	0x2EA	1011100010
+
+Autonomous Vehicle Systems	0x2EB	1011100011
+Smart City Infrastructure	0x2EC	1011100100
+5G/6G Network Integration	0x2ED	1011100101
+Artificial General Intelligence (AGI)	0x2EE	1011100110
+Decentralized Finance (DeFi)	0x2EF	1011100111
+Cross-Platform AI Frameworks	0x2F0	1011101000
+Edge AI Processing	0x2F1	1011101001
+Multi-Cloud Architecture	0x2F2	1011101010
+Neural-Symbolic Integration	0x2F3	1011101011
+Quantum Machine Learning	0x2F4	1011101100
+Hyperparameter Optimization	0x2F5	1011101101
+Digital Twins	0x2F6	1011101110
+Augmented Intelligence	0x2F7	1011101111
+Advanced Natural Language Processing (NLP)	0x2F8	1011110000
+Transformer Architectures	0x2F9	1011110001
+Recurrent Neural Networks (RNN)	0x2FA	1011110010
+Long Short-Term Memory (LSTM)	0x2FB	1011110011
+Generative Adversarial Networks (GANs)	0x2FC	1011110100
+Convolutional Neural Networks (CNNs)	0x2FD	1011110101
+Autoencoders	0x2FE	1011110110
+Transfer Learning	0x2FF	1011110111
+Reinforcement Learning Algorithms	0x300	1011111000
+Federated Learning	0x301	1011111001
+Knowledge Graphs	0x302	1011111010
+Cyber-Physical Systems (CPS)	0x303	1011111011
+Swarm Intelligence	0x304	1011111100
+Neuromorphic Computing	0x305	1011111101
+Blockchain Smart Contracts	0x306	1011111110
+Zero-Knowledge Proofs	0x307	1011111111
+Homomorphic Encryption	0x308	1100000000
+Differential Privacy	0x309	1100000001
+Secure Multi-Party Computation (SMPC)	0x30A	1100000010
+Quantum Cryptography	0x30B	1100000011
+Post-Quantum Cryptography	0x30C	1100000100
+Internet of Things (IoT) Security	0x30D	1100000101
+Blockchain Interoperability	0x30E	1100000110
+Interplanetary Communications Protocol (IPCP)	0x30F	1100000111
+Neurological Data Analysis	0x310	1100001000
+Augmented Reality (AR) Cloud	0x311	1100001001
+Virtual Reality (VR) Synthesis	0x312	1100001010
+Mixed Reality (MR) Interfaces	0x313	1100001011
+Human-Computer Interaction (HCI)	0x314	1100001100
+Deep Reinforcement Learning (DRL)	0x315	1100001101
+Blockchain-as-a-Service (BaaS)	0x316	1100001110
+Self-Sovereign Identity (SSI)	0x317	1100001111
+Edge Computing Security	0x318	1100010000
+Distributed Cloud Services	0x319	1100010001
+Security Information and Event Management (SIEM)	0x31A	1100010010
+Threat Intelligence	0x31B	1100010011
+Network Traffic Anomaly Detection	0x31C	1100010100
+Identity Access Management (IAM)	0x31D	1100010101
+Blockchain Consensus Mechanisms	0x31E	1100010110
+Decentralized Autonomous Organizations (DAO)	0x31F	1100010111
+Artificial Intelligence in Healthcare	0x320	1100011000
+Quantum-Assisted Machine Learning (QAML)	0x321	1100011001
+Health Informatics	0x322	1100011010
+Wearable Health Technology	0x323	1100011011
+Smart Wearables for IoT	0x324	1100011100
+Biometrics Authentication	0x325	1100011101
+Blockchain-Enabled Health Records	0x326	1100011110
+Medical Imaging AI	0x327	1100011111
+Genomic Data Analysis	0x328	1100100000
+AI-Driven Drug Discovery	0x329	1100100001
+Regenerative Medicine	0x32A	1100100010
+Bioinformatics Integration	0x32B	1100100011
+CRISPR and Gene Editing	0x32C	1100100100
+Synthetic Biology	0x32D	1100100101
+Neurotechnology	0x32E	1100100110
+Deep Learning in Drug Repurposing	0x32F	1100100111
+AI-Enhanced Imaging Systems	0x330	1100101000
+Cloud-Based Genetics Research	0x331	1100101001
+AI-Powered Personalized Medicine	0x332	1100101010
+Blockchain for Data Integrity	0x333	1100101011
+Digital Health Ecosystem	0x334	1100101100
+Data Privacy in Healthcare	0x335	1100101101
+Global Health Data Exchange	0x336	1100101110
+Blockchain in Clinical Trials	0x337	1100101111
+Decentralized Health Systems	0x338	1100110000
+Artificial Organs and Biotech	0x339	1100110001
+Brain-Computer Interfaces (BCI)	0x33A	1100110010
+Neuroprosthetics	0x33B	1100110011
+
+std::multimap	0x2EB	1011101011
+std::multiset	0x2EC	1011101100
+std::forward_list	0x2ED	1011101101
+std::shared_mutex	0x2EE	1011101110
+std::scoped_lock	0x2EF	1011101111
+std::atomic_flag	0x2F0	1011110000
+std::atomic_bool	0x2F1	1011110001
+std::span	0x2F2	1011110010
+std::barrier	0x2F3	1011110011
+std::semaphore	0x2F4	1011110100
+std::latch	0x2F5	1011110101
+constexpr lambda	0x2F6	1011110110
+co_await	0x2F7	1011110111
+co_yield	0x2F8	1011111000
+co_return	0x2F9	1011111001
+std::execution_policy	0x2FA	1011111010
+std::parallel_sort	0x2FB	1011111011
+std::reduce	0x2FC	1011111100
+std::inclusive_scan	0x2FD	1011111101
+std::exclusive_scan	0x2FE	
+
