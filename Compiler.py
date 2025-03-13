@@ -53,6 +53,19 @@ def parse(tokens):
         return Node("String", token[1])
     raise SyntaxError(f"Unexpected token: {token}")
 
+# Conversion table from DIP-LANG syntax to target representation
+conversion_table = {
+    "var": "DECLARE",
+    "func": "DEFINE_FUNCTION",
+    "return": "RETURN_VALUE",
+    "if": "IF_CONDITION",
+    "else": "ELSE_BLOCK",
+    "while": "WHILE_LOOP",
+    "struct": "DEFINE_STRUCT",
+    "import": "IMPORT_MODULE",
+    "export": "EXPORT_SYMBOL"
+}
+
 # Code Generation using ConversionTable.txt mappings
 def codegen(ast):
     if ast.type == "Number":
@@ -60,13 +73,6 @@ def codegen(ast):
     elif ast.type == "Identifier":
         return ast.value
     elif ast.type == "Keyword":
-        conversion_table = {
-            "var": "DECLARE",
-            "func": "DEFINE_FUNCTION",
-            "return": "RETURN_VALUE",
-            "if": "IF_CONDITION",
-            "else": "ELSE_BLOCK"
-        }
         return conversion_table.get(ast.value, ast.value)
     elif ast.type == "String":
         return f'"{ast.value}"'
