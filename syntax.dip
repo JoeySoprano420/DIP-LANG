@@ -916,5 +916,62 @@ std::execution_policy	0x2FA	1011111010
 std::parallel_sort	0x2FB	1011111011
 std::reduce	0x2FC	1011111100
 std::inclusive_scan	0x2FD	1011111101
-std::exclusive_scan	0x2FE	
+std::exclusive_scan	0x2FE	1011111110
 
+# Hybrid Transformation Engine Format
+
+data:
+  - id: 001
+    name: "Item 1"
+    value: 25
+    status: "active"
+  - id: 002
+    name: "Item 2"
+    value: 45
+    status: "inactive"
+
+actions:
+  - action: "filter"
+    input: "data"
+    conditions:
+      status: "active"
+  - action: "transform"
+    input: "data"
+    parameters:
+      multiply_value_by: 10
+  - action: "sort"
+    input: "data"
+    parameters:
+      by: "value"
+      order: "ascending"
+  - action: "aggregate"
+    input: "data"
+    parameters:
+      aggregate_by: "value"
+      operation: "sum"
+
+control_flow:
+  - condition: "if status == 'active'"
+    then:
+      - action: "process_data"
+    else:
+      - action: "skip"
+
+execute:
+  action: "process_data"
+  input: "data"
+  output: "result"
+  params:
+    threshold: 50
+    transform_multiplier: 10
+
+# Result and Output
+result:
+  - id: 001
+    name: "Item 1"
+    value: 250
+    status: "active"
+  - id: 002
+    name: "Item 2"
+    value: 450
+    status: "inactive"
