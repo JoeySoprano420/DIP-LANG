@@ -1006,3 +1006,46 @@ system "UnifiedProject" {
         }
     }
 }
+
+
+
+
+
+// Define a condition
+set x to 5
+
+// Check if x is greater than 3
+if x > 3 then
+    print("x is greater than 3")
+else
+    print("x is 3 or less")
+end
+
+// Using 'unless' to check if x is not equal to 10
+unless x == 10 then
+    print("x is not 10")
+end
+
+// Using 'while' loop to count down
+set count to 5
+while count > 0 do
+    print(count)
+    set count to count - 1
+end
+
+// Using 'until' loop to count up
+set count to 1
+until count > 5 do
+    print(count)
+    set count to count + 1
+end
+
+// Using 'because' to add reasoning
+if x == 5 then
+    print("x is exactly 5")
+    because "This was the value we set for x"
+end
+
+
+
+
