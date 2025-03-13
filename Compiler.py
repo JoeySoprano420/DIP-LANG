@@ -3,7 +3,7 @@ import sys
 
 # Token types based on DIP-LANG syntax
 TOKEN_MAP = {
-    "KEYWORD": r"\b(if|else|while|return|func|var|struct|import|export)\b",
+    "KEYWORD": r"\b(if|else|while|return|func|var|struct|import|export|class|for|break|continue)\b",
     "IDENTIFIER": r"\b[a-zA-Z_][a-zA-Z0-9_]*\b",
     "NUMBER": r"\b\d+(\.\d+)?\b",
     "OPERATOR": r"[+\-*/=<>!&|]",
@@ -63,7 +63,11 @@ conversion_table = {
     "while": "WHILE_LOOP",
     "struct": "DEFINE_STRUCT",
     "import": "IMPORT_MODULE",
-    "export": "EXPORT_SYMBOL"
+    "export": "EXPORT_SYMBOL",
+    "class": "DEFINE_CLASS",
+    "for": "FOR_LOOP",
+    "break": "BREAK_STATEMENT",
+    "continue": "CONTINUE_STATEMENT"
 }
 
 # Code Generation using ConversionTable.txt mappings
@@ -76,6 +80,8 @@ def codegen(ast):
         return conversion_table.get(ast.value, ast.value)
     elif ast.type == "String":
         return f'"{ast.value}"'
+    elif ast.type == "Expression":
+        return " ".join(codegen(child) for child in ast.children)
     return ""  # Expand later with full conversion mappings
 
 # Compiler entry point
@@ -87,6 +93,6 @@ def compile_code(source):
 
 # Example usage
 if __name__ == "__main__":
-    source_code = "var x = 5"
+    source_code = "class MyClass { var x = 10; func getX() { return x; } }"
     compiled_output = compile_code(source_code)
     print("Compiled Output:", compiled_output)
