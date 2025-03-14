@@ -839,6 +839,6 @@ std::execution_policy	0x2FA	1011111010
 std::parallel_sort	0x2FB	1011111011
 std::reduce	0x2FC	1011111100
 std::inclusive_scan	0x2FD	1011111101
-std::exclusive_scan	0x2FE	
+std::exclusive_scan	0x2FE	101111110
 
 
