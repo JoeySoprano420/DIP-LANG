@@ -1101,3 +1101,153 @@ int main() {
 
     return 0;
 }
+
+
+
+
+std::unordered_map<std::string, std::string> conversionTable = {
+    {"output", "std::cout << "},
+    {"var", "int"},
+    {"fn", "function"},
+    {"start", "block_start"},
+    {"stop", "block_end"},
+    {"if", "if"},
+    {"else", "else"},
+    {"while", "while"},
+    {"for", "for"},
+    {"try", "try"},
+    {"catch", "catch"},
+    {"class", "class"},
+    {"new", "new"},
+    {"delete", "delete"},
+    {"namespace", "namespace"}
+};
+
+std::vector<Token> lexer(const std::string& code) {
+    std::vector<Token> tokens;
+    std::string temp;
+    bool insideString = false;
+
+    for (size_t i = 0; i < code.size(); ++i) {
+        char c = code[i];
+
+        // Skip comments (lines starting with #)
+        if (c == '#' && (i == 0 || std::isspace(code[i-1]))) {
+            while (i < code.size() && code[i] != '\n') ++i; // Skip comment
+            continue;
+        }
+
+        // Handle string literals
+        if (c == '"' && !insideString) {
+            insideString = true;
+            continue;
+        } else if (c == '"' && insideString) {
+            insideString = false;
+            tokens.push_back({"string", temp});
+            temp.clear();
+            continue;
+        }
+
+        if (insideString) {
+            temp += c;
+            continue;
+        }
+
+        // Detect keywords and identifiers
+        if (std::isspace(c) || c == ';') {
+            if (!temp.empty()) {
+                tokens.push_back({"word", temp});
+                temp.clear();
+            }
+        } else if (isalpha(c) || c == '_') {
+            temp += c;
+        } else if (isdigit(c)) {
+            temp += c;
+        } else {
+            // Handle other symbols (operators, punctuation, etc.)
+            temp += c;
+        }
+    }
+
+    if (!temp.empty()) tokens.push_back({"word", temp});
+    return tokens;
+}
+
+void parser(std::vector<Token>& tokens) {
+    for (const auto& token : tokens) {
+        if (token.type == "start") {
+            std::cout << "// Start of Block" << std::endl;
+            std::cout << "{ " << std::endl;
+        } else if (token.type == "stop") {
+            std::cout << "// End of Block" << std::endl;
+            std::cout << "}" << std::endl;
+        } else if (token.type == "word") {
+            // Convert DIPLEX commands using the conversion table
+            auto it = conversionTable.find(token.value);
+            if (it != conversionTable.end()) {
+                std::cout << it->second << " ";
+            } else {
+                std::cout << token.value << " ";
+            }
+        }
+    }
+    std::cout << std::endl;
+}
+
+#include <cstdlib>  // For system() to call compiler
+
+void compileAndExecute(const std::string& cppCode) {
+    // Write the translated C++ code to a temporary file
+    std::ofstream outFile("temp.cpp");
+    outFile << cppCode;
+    outFile.close();
+
+    // Compile the code using a C++ compiler (GCC, Clang, etc.)
+    system("g++ temp.cpp -o temp_program");
+
+    // Execute the compiled program
+    system("./temp_program");
+
+    // Clean up
+    remove("temp.cpp");
+    remove("temp_program");
+}
+
+class ErrorHandler {
+public:
+    static void handleError(const InterpreterError& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        // Fallback or predictive correction can be implemented here
+    }
+};
+
+// Example runtime error handling:
+try {
+    // Code that could throw an exception
+} catch (const InterpreterError& e) {
+    ErrorHandler::handleError(e);
+}
+
+int main() {
+    std::string code = "start var a = 10; var b = 20; var sum = a + b; output(sum); stop";
+    
+    try {
+        // Tokenize and parse the code
+        auto tokens = lexer(code);
+        std::string cppCode = "";
+        parser(tokens);
+
+        // After parsing, compile and execute the C++ code
+        compileAndExecute(cppCode);
+
+    } catch (const InterpreterError& e) {
+        ErrorHandler::handleError(e);
+    }
+
+    return 0;
+}
+
+
+
+
+
