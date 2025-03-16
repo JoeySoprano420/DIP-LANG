@@ -21,7 +21,7 @@ struct Token {
     std::string value;
 };
 
-// Conversion table mapping DIPLEX keywords to C++ code
+// Updated Conversion Table mapping DIPLEX keywords to C++ code
 std::unordered_map<std::string, std::string> conversionTable = {
     {"output", "std::cout"},
     {"var", "int"},
@@ -37,7 +37,13 @@ std::unordered_map<std::string, std::string> conversionTable = {
     {"class", "object_class"},
     {"new", "object_new"},
     {"delete", "object_delete"},
-    {"namespace", "namespace_declaration"}
+    {"namespace", "namespace_declaration"},
+    // Extended keywords as per the ConversionTable.txt
+    {"return", "return"},
+    {"print", "std::cout"},
+    {"import", "include"},
+    {"let", "auto"},
+    // Additional custom mappings can be added here
 };
 
 // Base class for handling errors
@@ -224,7 +230,838 @@ public:
     }
 };
 
-// Type Deduction for `auto`
+// Type Deduction for auto
+template<typename T>
+std::string typeDeduction(const T& value) {
+    if (std::is_integral<T>::value) return "int";
+    else if (std::is_floating_point<T>::value) return "float";
+    else return "unknown";
+}
+
+// Function for JIT Compilation Strategy
+void compileDIPLEXCode(const std::string& code) {
+    // Placeholder for AOT compilation
+    // For certain scenarios, JIT compilation might be triggered for better performance
+    if (code.size() > 1000) {
+        std::cout << "Switching to JIT compilation for performance." << std::endl;
+    } else {
+        std::cout << "Using AOT compilation." << std::endl;
+    }
+}
+
+int main() {
+    // Example usage
+    try {
+        std::string code = "start var x = 5 stop";
+        auto tokens = lexer(code);
+        parser(tokens);
+
+        // Demonstrating template support
+        TemplateClass<int> t1(10);
+        t1.display();
+
+        TemplateClass<std::string> t2("Hello, World!");
+        t2.display();
+
+        // Predictive error handling
+        PredictiveModel model;
+        model.train({"start", "var", "stop"});
+        std::cout << "Next predicted state: " << model.predictNext("start") << std::endl;
+
+        // Simulate error handling
+        try {
+            throw FallbackError("Fallback mechanism triggered");
+        } catch (const InterpreterError& e) {
+            ErrorHandler::handleError(e);
+        }
+
+        // Compile DIPLEX code using AOT or JIT
+        compileDIPLEXCode(code);
+
+    } catch (const std::exception& e) {
+        std::cerr << "Main error: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
+
+
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <sstream>
+#include <cctype>
+#include <memory>
+#include <functional>
+#include <typeinfo>
+#include <stdexcept>
+#include <thread>
+#include <mutex>
+#include <atomic>
+#include <type_traits>
+#include <algorithm>
+#include <random>
+
+// Token structure for DIPLEX code
+struct Token {
+    std::string type;
+    std::string value;
+};
+
+// Updated Conversion Table mapping DIPLEX keywords to C++ code
+std::unordered_map<std::string, std::string> conversionTable = {
+    {"output", "std::cout"},
+    {"var", "int"},
+    {"fn", "function"},
+    {"start", "block_start"},
+    {"stop", "block_end"},
+    {"if", "conditional"},
+    {"else", "conditional_else"},
+    {"while", "loop_while"},
+    {"for", "loop_for"},
+    {"try", "exception_try"},
+    {"catch", "exception_catch"},
+    {"class", "object_class"},
+    {"new", "object_new"},
+    {"delete", "object_delete"},
+    {"namespace", "namespace_declaration"},
+    // Extended keywords as per the ConversionTable.txt
+    {"return", "return"},
+    {"print", "std::cout"},
+    {"import", "include"},
+    {"let", "auto"},
+    // Additional custom mappings can be added here
+};
+
+// Base class for handling errors
+class InterpreterError : public std::exception {
+public:
+    virtual const char* what() const noexcept = 0;
+};
+
+// Class for syntax errors
+class SyntaxError : public InterpreterError {
+    std::string message;
+public:
+    SyntaxError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for runtime errors
+class RuntimeError : public InterpreterError {
+    std::string message;
+public:
+    RuntimeError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for fallback errors
+class FallbackError : public InterpreterError {
+    std::string message;
+public:
+    FallbackError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for predictive errors (handling predictive models)
+class PredictiveError : public InterpreterError {
+    std::string message;
+public:
+    PredictiveError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for edge-case errors
+class EdgeCaseError : public InterpreterError {
+    std::string message;
+public:
+    EdgeCaseError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Predictive Model: Example Markov Chain-based Prediction (basic)
+class PredictiveModel {
+    std::unordered_map<std::string, double> stateProbabilities;
+public:
+    void train(const std::vector<std::string>& sequence) {
+        // Simplified example: increment probability for each observed state
+        for (const auto& state : sequence) {
+            stateProbabilities[state] += 1.0;
+        }
+    }
+
+    std::string predictNext(const std::string& currentState) {
+        // Predict next state based on current state (simplified)
+        // Ideally, we would use advanced methods like Markov Chains or Bayesian Networks
+        if (stateProbabilities[currentState] > 0) {
+            return "likely_next_state";
+        }
+        return "fallback_state";
+    }
+};
+
+// Error Handler with Fallback and Predictive Path
+class ErrorHandler {
+public:
+    static void handleError(const InterpreterError& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        if (dynamic_cast<const FallbackError*>(&e)) {
+            std::cout << "Attempting fallback mechanism..." << std::endl;
+            // Implement fallback logic here
+        } else if (dynamic_cast<const PredictiveError*>(&e)) {
+            std::cout << "Handling predictive error..." << std::endl;
+            // Implement predictive recovery here
+        } else if (dynamic_cast<const EdgeCaseError*>(&e)) {
+            std::cout << "Handling edge case..." << std::endl;
+            // Implement edge-case handling here
+        }
+    }
+};
+
+// Lexer: Tokenizes DIPLEX code
+std::vector<Token> lexer(const std::string& code) {
+    std::vector<Token> tokens;
+    std::string temp;
+    bool insideBlock = false;
+
+    for (size_t i = 0; i < code.size(); ++i) {
+        char c = code[i];
+
+        // Handle comments (lines starting with #)
+        if (c == '#' && (i == 0 || std::isspace(code[i-1]))) {
+            while (i < code.size() && code[i] != '\n') ++i; // Skip comment line
+            continue;
+        }
+
+        // Handle 'start' and 'stop' as block markers
+        if (code.substr(i, 5) == "start") {
+            tokens.push_back({"start", "start"});
+            i += 4;  // Skip "start"
+        } else if (code.substr(i, 4) == "stop") {
+            tokens.push_back({"stop", "stop"});
+            i += 3;  // Skip "stop"
+        } else if (code.substr(i, 2) == "if") {
+            tokens.push_back({"if", "if"});
+            i += 1; // Skip "if"
+        } else if (std::isspace(c) || c == ';') {
+            if (!temp.empty()) {
+                tokens.push_back({"word", temp});
+                temp.clear();
+            }
+        } else {
+            temp += c;
+        }
+    }
+
+    if (!temp.empty()) tokens.push_back({"word", temp});
+    return tokens;
+}
+
+// Parser: Creates an Abstract Syntax Tree (AST) and handles start/stop blocks
+void parser(std::vector<Token>& tokens) {
+    for (const auto& token : tokens) {
+        if (token.type == "start") {
+            std::cout << "Start Block: Begin execution group." << std::endl;
+        } else if (token.type == "stop") {
+            std::cout << "Stop Block: End execution group." << std::endl;
+        } else if (token.type == "if") {
+            std::cout << "Conditional Statement: If condition met." << std::endl;
+        } else if (token.type == "while") {
+            std::cout << "Loop: While condition met." << std::endl;
+        } else if (token.type == "fn") {
+            std::cout << "Function Definition: Begin function." << std::endl;
+        } else {
+            // Convert DIPLEX commands using the conversion table
+            auto it = conversionTable.find(token.value);
+            if (it != conversionTable.end()) {
+                std::cout << it->second << " ";
+            } else {
+                std::cout << token.value << " ";
+            }
+        }
+    }
+    std::cout << std::endl;
+}
+
+// Class handling template class support
+template<typename T>
+class TemplateClass {
+public:
+    T value;
+    TemplateClass(T val) : value(val) {}
+
+    void display() {
+        std::cout << "Template Class Value: " << value << std::endl;
+    }
+};
+
+// Function for template specialization
+template<>
+class TemplateClass<std::string> {
+public:
+    std::string value;
+    TemplateClass(std::string val) : value(val) {}
+
+    void display() {
+        std::cout << "Specialized Template for string: " << value << std::endl;
+    }
+};
+
+// Type Deduction for auto
+template<typename T>
+std::string typeDeduction(const T& value) {
+    if (std::is_integral<T>::value) return "int";
+    else if (std::is_floating_point<T>::value) return "float";
+    else return "unknown";
+}
+
+// Function for JIT Compilation Strategy
+void compileDIPLEXCode(const std::string& code) {
+    // Placeholder for AOT compilation
+    // For certain scenarios, JIT compilation might be triggered for better performance
+    if (code.size() > 1000) {
+        std::cout << "Switching to JIT compilation for performance." << std::endl;
+    } else {
+        std::cout << "Using AOT compilation." << std::endl;
+    }
+}
+
+int main() {
+    // Example usage
+    try {
+        std::string code = "start var x = 5 stop";
+        auto tokens = lexer(code);
+        parser(tokens);
+
+        // Demonstrating template support
+        TemplateClass<int> t1(10);
+        t1.display();
+
+        TemplateClass<std::string> t2("Hello, World!");
+        t2.display();
+
+        // Predictive error handling
+        PredictiveModel model;
+        model.train({"start", "var", "stop"});
+        std::cout << "Next predicted state: " << model.predictNext("start") << std::endl;
+
+        // Simulate error handling
+        try {
+            throw FallbackError("Fallback mechanism triggered");
+        } catch (const InterpreterError& e) {
+            ErrorHandler::handleError(e);
+        }
+
+        // Compile DIPLEX code using AOT or JIT
+        compileDIPLEXCode(code);
+
+    } catch (const std::exception& e) {
+        std::cerr << "Main error: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <sstream>
+#include <cctype>
+#include <memory>
+#include <functional>
+#include <typeinfo>
+#include <stdexcept>
+#include <thread>
+#include <mutex>
+#include <atomic>
+#include <type_traits>
+#include <algorithm>
+#include <random>
+
+// Token structure for DIPLEX code
+struct Token {
+    std::string type;
+    std::string value;
+};
+
+// Updated Conversion Table mapping DIPLEX keywords to C++ code
+std::unordered_map<std::string, std::string> conversionTable = {
+    {"output", "std::cout"},
+    {"var", "auto"},
+    {"fn", "function"},
+    {"start", "block_start"},
+    {"stop", "block_end"},
+    {"if", "conditional"},
+    {"else", "conditional_else"},
+    {"while", "loop_while"},
+    {"for", "loop_for"},
+    {"try", "exception_try"},
+    {"catch", "exception_catch"},
+    {"class", "object_class"},
+    {"new", "object_new"},
+    {"delete", "object_delete"},
+    {"namespace", "namespace_declaration"},
+    {"return", "return"},
+    {"print", "std::cout"},
+    {"import", "include"},
+    {"let", "auto"},
+};
+
+// Base class for handling errors
+class InterpreterError : public std::exception {
+public:
+    virtual const char* what() const noexcept = 0;
+};
+
+// Class for syntax errors
+class SyntaxError : public InterpreterError {
+    std::string message;
+public:
+    SyntaxError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for runtime errors
+class RuntimeError : public InterpreterError {
+    std::string message;
+public:
+    RuntimeError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for fallback errors
+class FallbackError : public InterpreterError {
+    std::string message;
+public:
+    FallbackError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for predictive errors (handling predictive models)
+class PredictiveError : public InterpreterError {
+    std::string message;
+public:
+    PredictiveError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for edge-case errors
+class EdgeCaseError : public InterpreterError {
+    std::string message;
+public:
+    EdgeCaseError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Predictive Model: Example Markov Chain-based Prediction (basic)
+class PredictiveModel {
+    std::unordered_map<std::string, double> stateProbabilities;
+public:
+    void train(const std::vector<std::string>& sequence) {
+        for (const auto& state : sequence) {
+            stateProbabilities[state] += 1.0; // Simple frequency-based count
+        }
+    }
+
+    std::string predictNext(const std::string& currentState) {
+        if (stateProbabilities[currentState] > 0) {
+            return "likely_next_state"; // Simple prediction, refine for real-world usage
+        }
+        return "fallback_state";
+    }
+};
+
+// Lexer: Tokenizes DIPLEX code
+std::vector<Token> lexer(const std::string& code) {
+    std::vector<Token> tokens;
+    std::string temp;
+    bool insideBlock = false;
+
+    for (size_t i = 0; i < code.size(); ++i) {
+        char c = code[i];
+
+        if (c == '#' && (i == 0 || std::isspace(code[i-1]))) {
+            while (i < code.size() && code[i] != '\n') ++i;
+            continue;
+        }
+
+        if (code.substr(i, 5) == "start") {
+            tokens.push_back({"start", "start"});
+            i += 4;  
+        } else if (code.substr(i, 4) == "stop") {
+            tokens.push_back({"stop", "stop"});
+            i += 3;  
+        } else if (code.substr(i, 2) == "if") {
+            tokens.push_back({"if", "if"});
+            i += 1; 
+        } else if (std::isspace(c) || c == ';') {
+            if (!temp.empty()) {
+                tokens.push_back({"word", temp});
+                temp.clear();
+            }
+        } else {
+            temp += c;
+        }
+    }
+
+    if (!temp.empty()) tokens.push_back({"word", temp});
+    return tokens;
+}
+
+// Parser: Creates an Abstract Syntax Tree (AST) and handles start/stop blocks
+void parser(std::vector<Token>& tokens) {
+    for (const auto& token : tokens) {
+        if (token.type == "start") {
+            std::cout << "Start Block: Begin execution group." << std::endl;
+        } else if (token.type == "stop") {
+            std::cout << "Stop Block: End execution group." << std::endl;
+        } else if (token.type == "if") {
+            std::cout << "Conditional Statement: If condition met." << std::endl;
+        } else if (token.type == "while") {
+            std::cout << "Loop: While condition met." << std::endl;
+        } else if (token.type == "fn") {
+            std::cout << "Function Definition: Begin function." << std::endl;
+        } else {
+            auto it = conversionTable.find(token.value);
+            if (it != conversionTable.end()) {
+                std::cout << it->second << " ";
+            } else {
+                std::cout << token.value << " ";
+            }
+        }
+    }
+    std::cout << std::endl;
+}
+
+// Class handling template class support
+template<typename T>
+class TemplateClass {
+public:
+    T value;
+    TemplateClass(T val) : value(val) {}
+
+    void display() {
+        std::cout << "Template Class Value: " << value << std::endl;
+    }
+};
+
+// Template specialization
+template<>
+class TemplateClass<std::string> {
+public:
+    std::string value;
+    TemplateClass(std::string val) : value(val) {}
+
+    void display() {
+        std::cout << "Specialized Template for string: " << value << std::endl;
+    }
+};
+
+// Type Deduction for auto (based on value analysis)
+template<typename T>
+std::string typeDeduction(const T& value) {
+    if (std::is_integral<T>::value) return "int";
+    else if (std::is_floating_point<T>::value) return "float";
+    else return "unknown";
+}
+
+// Simulate a JIT Compilation Strategy: Code Optimization Based on Code Complexity
+void compileDIPLEXCode(const std::string& code) {
+    // Simulate an analysis based on complexity or length
+    if (code.size() > 100) {
+        std::cout << "JIT Compilation: Optimizing code for performance." << std::endl;
+        // In a real-world scenario, this would trigger dynamic code execution or further optimizations
+    } else {
+        std::cout << "AOT Compilation: Using static compilation for quicker execution." << std::endl;
+    }
+}
+
+// Function for fallbacks and predictive error recovery
+void executeWithFallback(const std::string& code) {
+    try {
+        if (code == "error") {
+            throw FallbackError("Simulated fallback error due to detected anomaly.");
+        } else {
+            std::cout << "Code executed successfully: " << code << std::endl;
+        }
+    } catch (const InterpreterError& e) {
+        std::cerr << "Error detected: " << e.what() << std::endl;
+        // Handle recovery based on error type
+        if (dynamic_cast<const FallbackError*>(&e)) {
+            std::cout << "Triggering fallback recovery..." << std::endl;
+            // Additional logic to recover gracefully
+        }
+    }
+}
+
+int main() {
+    // Sample DIPLEX code
+    std::string code = "start var x = 5 stop";
+
+    // Lexer and Parser
+    auto tokens = lexer(code);
+    parser(tokens);
+
+    // Template Class Example
+    TemplateClass<int> t1(10);
+    t1.display();
+
+    TemplateClass<std::string> t2("Hello, World!");
+    t2.display();
+
+    // Simulate JIT Compilation
+    compileDIPLEXCode(code);
+
+    // Simulate Predictive Model
+    PredictiveModel model;
+    model.train({"start", "var", "stop"});
+    std::cout << "Next predicted state: " << model.predictNext("start") << std::endl;
+
+    // Execute code with fallback logic
+    executeWithFallback("error");  // This simulates a fallback
+
+    return 0;
+}
+
+
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <sstream>
+#include <cctype>
+#include <memory>
+#include <functional>
+#include <typeinfo>
+#include <stdexcept>
+#include <thread>
+#include <mutex>
+#include <atomic>
+#include <type_traits>
+#include <algorithm>
+#include <random>
+
+// Token structure for DIPLEX code
+struct Token {
+    std::string type;
+    std::string value;
+};
+
+// Enhanced Conversion table mapping DIPLEX keywords to C++ code (based on the provided table)
+std::unordered_map<std::string, std::string> conversionTable = {
+    {"output", "std::cout"},
+    {"var", "int"},
+    {"fn", "function"},
+    {"start", "block_start"},
+    {"stop", "block_end"},
+    {"if", "conditional"},
+    {"else", "conditional_else"},
+    {"while", "loop_while"},
+    {"for", "loop_for"},
+    {"try", "exception_try"},
+    {"catch", "exception_catch"},
+    {"class", "object_class"},
+    {"new", "object_new"},
+    {"delete", "object_delete"},
+    {"namespace", "namespace_declaration"},
+    // Further mappings can be added based on the ConversionTable.txt
+};
+
+// Base class for handling errors
+class InterpreterError : public std::exception {
+public:
+    virtual const char* what() const noexcept = 0;
+};
+
+// Class for syntax errors
+class SyntaxError : public InterpreterError {
+    std::string message;
+public:
+    SyntaxError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for runtime errors
+class RuntimeError : public InterpreterError {
+    std::string message;
+public:
+    RuntimeError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for fallback errors
+class FallbackError : public InterpreterError {
+    std::string message;
+public:
+    FallbackError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for predictive errors (handling predictive models)
+class PredictiveError : public InterpreterError {
+    std::string message;
+public:
+    PredictiveError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Class for edge-case errors
+class EdgeCaseError : public InterpreterError {
+    std::string message;
+public:
+    EdgeCaseError(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+// Predictive Model: Example Markov Chain-based Prediction (basic)
+class PredictiveModel {
+    std::unordered_map<std::string, double> stateProbabilities;
+public:
+    void train(const std::vector<std::string>& sequence) {
+        for (const auto& state : sequence) {
+            stateProbabilities[state] += 1.0;
+        }
+    }
+
+    std::string predictNext(const std::string& currentState) {
+        if (stateProbabilities[currentState] > 0) {
+            return "likely_next_state";
+        }
+        return "fallback_state";
+    }
+};
+
+// Error Handler with Fallback and Predictive Path
+class ErrorHandler {
+public:
+    static void handleError(const InterpreterError& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        if (dynamic_cast<const FallbackError*>(&e)) {
+            std::cout << "Attempting fallback mechanism..." << std::endl;
+            // Implement fallback logic here
+        } else if (dynamic_cast<const PredictiveError*>(&e)) {
+            std::cout << "Handling predictive error..." << std::endl;
+            // Implement predictive recovery here
+        } else if (dynamic_cast<const EdgeCaseError*>(&e)) {
+            std::cout << "Handling edge case..." << std::endl;
+            // Implement edge-case handling here
+        }
+    }
+};
+
+// Lexer: Tokenizes DIPLEX code
+std::vector<Token> lexer(const std::string& code) {
+    std::vector<Token> tokens;
+    std::string temp;
+
+    for (size_t i = 0; i < code.size(); ++i) {
+        char c = code[i];
+
+        // Handle comments (lines starting with #)
+        if (c == '#' && (i == 0 || std::isspace(code[i-1]))) {
+            while (i < code.size() && code[i] != '\n') ++i; // Skip comment line
+            continue;
+        }
+
+        // Handle DIPLEX keywords and identifiers
+        if (std::isalnum(c) || c == '_') {
+            temp += c;
+        } else if (std::isspace(c) || c == ';') {
+            if (!temp.empty()) {
+                tokens.push_back({"word", temp});
+                temp.clear();
+            }
+        }
+    }
+
+    if (!temp.empty()) tokens.push_back({"word", temp});
+    return tokens;
+}
+
+// Parser: Creates an Abstract Syntax Tree (AST) and handles start/stop blocks
+void parser(std::vector<Token>& tokens) {
+    for (const auto& token : tokens) {
+        if (token.type == "word") {
+            auto it = conversionTable.find(token.value);
+            if (it != conversionTable.end()) {
+                std::cout << it->second << " ";
+            } else {
+                std::cout << token.value << " ";
+            }
+        } else if (token.type == "start") {
+            std::cout << "Start Block: Begin execution group." << std::endl;
+        } else if (token.type == "stop") {
+            std::cout << "Stop Block: End execution group." << std::endl;
+        }
+    }
+    std::cout << std::endl;
+}
+
+// Class handling template class support
+template<typename T>
+class TemplateClass {
+public:
+    T value;
+    TemplateClass(T val) : value(val) {}
+
+    void display() {
+        std::cout << "Template Class Value: " << value << std::endl;
+    }
+};
+
+// Template specialization for strings
+template<>
+class TemplateClass<std::string> {
+public:
+    std::string value;
+    TemplateClass(std::string val) : value(val) {}
+
+    void display() {
+        std::cout << "Specialized Template for string: " << value << std::endl;
+    }
+};
+
+// Type Deduction for auto
 template<typename T>
 std::string typeDeduction(const T& value) {
     if (std::is_integral<T>::value) return "int";
@@ -264,219 +1101,3 @@ int main() {
 
     return 0;
 }
-
-
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <sstream>
-#include <cctype>
-#include <memory>
-#include <functional>
-#include <stdexcept>
-#include <algorithm>
-#include <random>
-
-// Token structure for DIPLEX code
-struct Token {
-    std::string type;
-    std::string value;
-};
-
-// Conversion table mapping DIPLEX keywords to C++ equivalents
-const std::unordered_map<std::string, std::string> conversionTable = {
-    {"output", "std::cout"},
-    {"var", "int"},
-    {"fn", "function"},
-    {"start", "block_start"},
-    {"stop", "block_end"},
-    {"if", "conditional"},
-    {"else", "conditional_else"},
-    {"while", "loop_while"},
-    {"for", "loop_for"},
-    {"try", "exception_try"},
-    {"catch", "exception_catch"},
-    {"class", "object_class"},
-    {"new", "object_new"},
-    {"delete", "object_delete"},
-    {"namespace", "namespace_declaration"}
-};
-
-// Base error handling class
-class InterpreterError : public std::exception {
-public:
-    explicit InterpreterError(std::string msg) : message(std::move(msg)) {}
-    const char* what() const noexcept override { return message.c_str(); }
-private:
-    std::string message;
-};
-
-class SyntaxError : public InterpreterError { using InterpreterError::InterpreterError; };
-class RuntimeError : public InterpreterError { using InterpreterError::InterpreterError; };
-class FallbackError : public InterpreterError { using InterpreterError::InterpreterError; };
-class PredictiveError : public InterpreterError { using InterpreterError::InterpreterError; };
-class EdgeCaseError : public InterpreterError { using InterpreterError::InterpreterError; };
-
-// Predictive Model: Example Markov Chain-based Prediction
-class PredictiveModel {
-    std::unordered_map<std::string, double> stateProbabilities;
-public:
-    void train(const std::vector<std::string>& sequence) {
-        for (const auto& state : sequence) {
-            stateProbabilities[state] += 1.0;
-        }
-    }
-
-    std::string predictNext(const std::string& currentState) const {
-        return (stateProbabilities.count(currentState) && stateProbabilities.at(currentState) > 0)
-               ? "likely_next_state" : "fallback_state";
-    }
-};
-
-// Error Handler
-class ErrorHandler {
-public:
-    static void handleError(const InterpreterError& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        if (dynamic_cast<const FallbackError*>(&e)) {
-            std::cout << "Attempting fallback mechanism..." << std::endl;
-        } else if (dynamic_cast<const PredictiveError*>(&e)) {
-            std::cout << "Handling predictive error..." << std::endl;
-        } else if (dynamic_cast<const EdgeCaseError*>(&e)) {
-            std::cout << "Handling edge case..." << std::endl;
-        }
-    }
-};
-
-// Lexer: Tokenizes DIPLEX code
-std::vector<Token> lexer(const std::string& code) {
-    std::vector<Token> tokens;
-    std::istringstream stream(code);
-    std::string word;
-    while (stream >> word) {
-        if (word[0] == '#') break; // Skip comments
-        tokens.push_back({word, word});
-    }
-    return tokens;
-}
-
-// Parser: Parses tokens and converts them to executable form
-void parser(const std::vector<Token>& tokens) {
-    for (const auto& token : tokens) {
-        if (conversionTable.count(token.value)) {
-            std::cout << conversionTable.at(token.value) << " ";
-        } else {
-            std::cout << token.value << " ";
-        }
-    }
-    std::cout << std::endl;
-}
-
-// Template Class with Specialization
-template<typename T>
-class TemplateClass {
-public:
-    explicit TemplateClass(T val) : value(val) {}
-    void display() const { std::cout << "Value: " << value << std::endl; }
-private:
-    T value;
-};
-
-template<>
-class TemplateClass<std::string> {
-public:
-    explicit TemplateClass(std::string val) : value(std::move(val)) {}
-    void display() const { std::cout << "String Value: " << value << std::endl; }
-private:
-    std::string value;
-};
-
-int main() {
-    try {
-        std::string code = "start var x = 5 stop";
-        auto tokens = lexer(code);
-        parser(tokens);
-
-        // Demonstrating template usage
-        TemplateClass<int> t1(10);
-        t1.display();
-
-        TemplateClass<std::string> t2("Hello, World!");
-        t2.display();
-
-        // Predictive error handling
-        PredictiveModel model;
-        model.train({"start", "var", "stop"});
-        std::cout << "Predicted next state: " << model.predictNext("start") << std::endl;
-
-        // Simulate error handling
-        throw FallbackError("Fallback mechanism triggered");
-    } catch (const InterpreterError& e) {
-        ErrorHandler::handleError(e);
-    }
-
-    return 0;
-}
-
-class DIPLEXInterpreter:
-    def __init__(self):
-        self.variables = {}
-        self.execution_queue = []  # Multi-threading execution queue
-        self.error_log = []  # Deferred error handling
-
-    def tokenize(self, code):
-        tokens = code.replace("\n", " ").split()
-        return tokens
-
-    def parse(self, tokens):
-        parsed_code = []
-        for token in tokens:
-            if token in self.variables:
-                parsed_code.append(self.variables[token])
-            else:
-                parsed_code.append(token)
-        return parsed_code
-
-    def execute(self, parsed_code):
-        import threading
-        
-        def run_command(command):
-            try:
-                if command.startswith("SET"):
-                    _, var, value = command.split()
-                    self.variables[var] = value
-                elif command.startswith("PRINT"):
-                    _, var = command.split()
-                    print(self.variables.get(var, "Undefined"))
-                else:
-                    raise ValueError(f"Unknown command: {command}")
-            except Exception as e:
-                self.error_log.append(str(e))
-
-        threads = []
-        for command in parsed_code:
-            thread = threading.Thread(target=run_command, args=(command,))
-            threads.append(thread)
-            thread.start()
-
-        for thread in threads:
-            thread.join()
-        
-    def run(self, code):
-        tokens = self.tokenize(code)
-        parsed_code = self.parse(tokens)
-        self.execute(parsed_code)
-        if self.error_log:
-            print("Errors encountered:", self.error_log)
-
-# Example Usage
-interpreter = DIPLEXInterpreter()
-code = """
-SET x 10
-PRINT x
-SET y 20
-PRINT y
-"""
-interpreter.run(code)
-
