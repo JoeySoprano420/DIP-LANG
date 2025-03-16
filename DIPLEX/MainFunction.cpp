@@ -7,12 +7,12 @@ int main() {
     // Initialize Conversion Table
     ConversionTable::initialize();
 
-    // Example DIPLEX code
-    std::string code = "start var a = 10; var b = 20; var sum = a + b; output(sum); stop";
+    // Example DIPLEX source file path
+    std::string filename = "example.diplex";
 
-    // Compile and execute the code
+    // Compile and execute the code from the file
     Compiler compiler;
-    compiler.compileAndExecute(code);
+    compiler.compileAndExecuteFromFile(filename);
 
     return 0;
 }
