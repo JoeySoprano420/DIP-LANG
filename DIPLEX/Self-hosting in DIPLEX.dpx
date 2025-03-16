@@ -418,3 +418,65 @@ int main() {
 
     return 0;
 }
+
+class DIPLEXInterpreter:
+    def __init__(self):
+        self.variables = {}
+        self.execution_queue = []  # Multi-threading execution queue
+        self.error_log = []  # Deferred error handling
+
+    def tokenize(self, code):
+        tokens = code.replace("\n", " ").split()
+        return tokens
+
+    def parse(self, tokens):
+        parsed_code = []
+        for token in tokens:
+            if token in self.variables:
+                parsed_code.append(self.variables[token])
+            else:
+                parsed_code.append(token)
+        return parsed_code
+
+    def execute(self, parsed_code):
+        import threading
+        
+        def run_command(command):
+            try:
+                if command.startswith("SET"):
+                    _, var, value = command.split()
+                    self.variables[var] = value
+                elif command.startswith("PRINT"):
+                    _, var = command.split()
+                    print(self.variables.get(var, "Undefined"))
+                else:
+                    raise ValueError(f"Unknown command: {command}")
+            except Exception as e:
+                self.error_log.append(str(e))
+
+        threads = []
+        for command in parsed_code:
+            thread = threading.Thread(target=run_command, args=(command,))
+            threads.append(thread)
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+        
+    def run(self, code):
+        tokens = self.tokenize(code)
+        parsed_code = self.parse(tokens)
+        self.execute(parsed_code)
+        if self.error_log:
+            print("Errors encountered:", self.error_log)
+
+# Example Usage
+interpreter = DIPLEXInterpreter()
+code = """
+SET x 10
+PRINT x
+SET y 20
+PRINT y
+"""
+interpreter.run(code)
+
