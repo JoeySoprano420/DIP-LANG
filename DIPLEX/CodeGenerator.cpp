@@ -4,22 +4,36 @@
 
 #include <string>
 #include <bitset>
+#include <fstream>
+#include <iostream>
 
 class CodeGenerator {
 public:
-    // Convert a hexadecimal string to binary
-    std::string hexToBinary(const std::string& hex) {
+    // Convert a hexadecimal string to machine code (assembly format)
+    std::string hexToAssembly(const std::string& hex) {
+        // In a real scenario, you would map hex to assembly instructions.
+        // This is a simple mock-up for educational purposes.
         unsigned int n;
         std::stringstream ss;
         ss << std::hex << hex;
         ss >> n;
-        return std::bitset<32>(n).to_string();  // Return 32-bit binary representation
+        return "MOV R0, #" + std::to_string(n); // Basic Assembly-like Code
     }
 
-    // Generate machine code (for simplicity, we're converting hex to binary)
-    void generateBinaryCode(const std::string& hexCode) {
-        std::string binary = hexToBinary(hexCode);
-        std::cout << "Hex: " << hexCode << " -> Binary: " << binary << std::endl;
+    // Generate assembly code
+    void generateAssemblyCode(const std::string& hexCode, const std::string& outputFileName) {
+        std::ofstream outFile(outputFileName);
+        
+        if (!outFile.is_open()) {
+            std::cerr << "Error opening output file for assembly code.\n";
+            return;
+        }
+        
+        std::string assemblyCode = hexToAssembly(hexCode);
+        outFile << assemblyCode << "\n";
+        outFile.close();
+        
+        std::cout << "Assembly code generated in " << outputFileName << std::endl;
     }
 };
 
